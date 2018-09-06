@@ -38,23 +38,41 @@
         </div>
         <div class="info-basic">
             <div class='tip'>详情描述（必填）</div>
-               <vue-editor id="editor"
-               useCustomImageHandler
-               @imageAdded="handleImageAdded"
-                v-model="detail.describe">
-              </vue-editor>
+            <div class="content">
+                <div class='title'>
+                    描述内容
+                </div>
+                <textarea v-model="detail.describe"></textarea>
+            </div>
+             <div class="upload">
+                <div class='title'>
+                    上传图片
+                </div>
+                <div class="img">
+                    <el-upload
+                        action="http://www.youbian.link/api/v1/release/img"
+                        list-type="picture-card"
+                        name='img'
+                        :on-success='success'
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove">
+                        <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="dialogImageUrl" alt="">
+                    </el-dialog>
+                </div>
+            </div>
         </div>
         <div class="btnbox">
             <div class="btn" @click='send'>
-              确认发布
+              确认修改
             </div>
         </div>
     </div>
 </template>
 <script>
 import Token from '../../store/token'
-import { VueEditor } from 'vue2-editor'
-import VDistpicker from 'v-distpicker'
 export default {
   data() {
     return {
@@ -71,12 +89,12 @@ export default {
       city_code:'',
       area_code:'',
       isClock:false,
+      selectedOptions:[],
+      dialogImageUrl: '',
+      dialogVisible: false,
+      img:[],
     };
   },
-  components: {
-       VueEditor,
-       VDistpicker
-   },
    computed:{
       options:function(){
         return this.$store.state.allCate
@@ -107,6 +125,11 @@ export default {
           var city_code = this.detail.city_code;
           var video_url =  this.detail.video_url;
           var describe = this.detail.describe;
+          if(this.img.length>0){
+            var img = this.img.toString()
+          }else{
+            var img = this.detail.img.toString();
+          }
           var data={
             id,
             title,
@@ -120,10 +143,11 @@ export default {
             area_code,
             city_code,
             video_url,
-            describe
+            describe,
+            img
           }
           this.$http.post(
-            '/api/release/edit',
+            'http://www.youbian.link/api/v1/release/edit',
             data,
             	{headers: {
 				      token:Token.fetch()}}
@@ -143,43 +167,16 @@ export default {
             }    
           })
     },
-    handleChange(value) {
-      if(value.length==3){
-        this.level_one=value[0];
-        this.level_two=value[1];
-        this.level_three=value[2];
-      }
+     handleRemove(file, fileList) {
+        console.log(file, fileList);
     },
-     handleImageAdded: function(file, Editor, cursorLocation, resetUploader) {
-        // An example of using FormData
-        // NOTE: Your key could be different such as:
-        // formData.append('file', file)
-        var formData = new FormData();
-        formData.append('img', file)
- 
-        this.$http({
-          url: '/api/release/img',
-          method: 'post',
-          data: formData
-        })
-        .then((result) => {
-          let url = result.data.data // Get url from response
-          console.log(url)
-          Editor.insertEmbed(cursorLocation, 'image',url);
-          resetUploader();
-        })
-        .catch((err) => {
-          console.log(err);
-        })
-      },
-    onChangeArea(a){
-      this.area_code=a.code;  
+    handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
     },
-    onChangecity(a){
-      this.city_code=a.code;
-    },
-    onChangeprovince(a){
-      this.province_code=a.code;
+    success(res, file, fileList){
+        this.img.push(res.data)
+        console.log(this.img)
     },
     changePrice(a){
       this.price=a;
@@ -200,7 +197,7 @@ export default {
     }
     this.$http({
       methods:'get',
-      url:'/api/release/edit',
+      url:'http://www.youbian.link/api/v1/release/edit',
       params:data,
       headers:{token:Token.fetch()}
     }).then(res=>{
@@ -240,7 +237,35 @@ export default {
     background-color: #fff;
     margin-bottom:30px;
     border-radius:10px;
+     .content{
+        .title{
+            float: left;
+            color:#666;
+        }
+        textarea{
+            padding:10px;
+            box-sizing: border-box;
+            width: 600px;
+            margin-left:30px;
+            height: 160px;
+            border:1px solid #eaeaea;
+        }
+    }
+     .upload{
+          padding-top:5px;
+          overflow: hidden;
+          .title{
+              float: left;
+              color:#666;
+              margin-right:30px;
+          }
+          .img{
+              float: left;
+              width: 625px;
+          }
+      }
     .infolist{
+      
       li{
         line-height: 40px;
         height: 40px;

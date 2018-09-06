@@ -1,6 +1,7 @@
 <template>
     <div class="rank">
-        <div class="rankbg">
+        <div class="rankbg" style='position:relative'>
+            <img src="../../assets/pic/rankbg.png" alt="" style='postion:absolute'>
             <div class="user-first user" v-if="rank.length>0">
                 <div class="circle">
                     <img :src="rank[0].get_user.img" alt="" v-if="rank[0].get_user.img">
@@ -66,7 +67,7 @@
     export default{
         computed:{
             rank:function(){
-                return this.$store.state.rank
+                return this.$store.state.rankSend
             }
         },
         data(){
@@ -122,7 +123,6 @@
     width: 1200px;
     height: 526px;
     position: relative;
-    background: url(../../assets/pic/rankbg.png);
     .user {
       position: absolute;
       text-align: center;

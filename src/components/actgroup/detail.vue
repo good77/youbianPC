@@ -35,7 +35,7 @@
     width: 1200px;
     margin:auto;
     .guide{
-        font-size:24px;
+        font-size:16px;
         padding:20px 0 20px 0;
         color:#3f3f3f;
         .vice-guide{

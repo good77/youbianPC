@@ -36,7 +36,7 @@
                         </li>
                         <li>
                             <span class="icon"></span>
-                            身份认证：<span class='name' v-if="userInfo.id_card">{{userInfo.id_card}}</span><span class='hasNamed'  v-if="userInfo.id_card">已实名<img src="../../assets/pic/icon-hasnamed.png" alt=""></span>
+                            身份认证：<span class='name' v-if="userInfo.id_card">{{userInfo.id_card.substring(0,6)}}******{{userInfo.id_card.substring(12,18)}}</span><span class='hasNamed'  v-if="userInfo.id_card">已实名<img src="../../assets/pic/icon-hasnamed.png" alt=""></span>
                         </li>
                     </ul>
                     <router-link tag='button' to='/mine/setinfo' class="updateinfo">修改基本信息</router-link>

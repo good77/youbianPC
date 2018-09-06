@@ -7,7 +7,7 @@
                 <input type="password" class='pwd'  placeholder="请输入密码" v-model="password">
                 <input type="password" class='repwd'  placeholder="请确认密码" v-model="password_confirm">
                 <input type="text" class='checkcode'  placeholder="请输入验证码" v-model="code">
-                <button class='checkcode-btn' @click='getcode'>获取验证码</button>
+                <button class='checkcode-btn' @click='getcode'>{{m}}</button>
                 <button class='getlose-btn' @click='getlose'>确认找回</button>
                 <router-link tag='p' to='/user/login' class='getlose'>去登录></router-link>
             </div>
@@ -23,26 +23,36 @@ import qs from 'qs'
                 password:'',
                 password_confirm:'',
                 code:'',
+                m:'获取验证码',
+                disabled:false
             }
         },
         methods:{
             getcode(){
-                var phone= this.phone;
-                var data={
-                    phone
+                var m=60;
+                var timer = window.setInterval(()=>{
+                    if(m>1){
+                        m--;
+                        this.m=m+'秒后重试';
+                        console.log(this.m)
+                        this.disabled=true
+                    }else{
+                        this.m='获取验证码'
+                        this.disabled=false
+                    }
+                },1000)
+                var data = {
+                    phone:this.phone
                 }
                 this.$http.post(
-                    'http://www.youbian.link/api/v1/member/SendSms', 
-                    qs.stringify(data), 
-                    {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-                )
-                
-                    .then(function (response) {
-                    console.log(response);
-                    })
-                    .catch(function (error) {
-                    console.log(error);
+                    'http://www.youbian.link/api/v1/member/sendSms',
+                    data,
+                ).then(res=>{
+                   this.$message({
+                            message: res.data.message,
+                            type: 'warning'
                     });
+                })
              },
             getlose(){
                 var phone= this.phone;
@@ -132,6 +142,10 @@ import qs from 'qs'
             background-color: #fff;
             border:1px solid #dd5519;
             color:#dd5519;
+        }
+        .checkcode-btn:hover{
+            color:#fff;
+            background-color: #dd5519;
         }
     }
 }

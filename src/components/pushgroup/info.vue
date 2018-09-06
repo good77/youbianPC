@@ -12,9 +12,12 @@
                <li>
                   <span class='xinghao color-fff'>*</span>地址
                   <div class='iptbox1'>
-                       <p class="distpicker-address-wrapper">
-                          <v-distpicker @area="onChangeArea" @city="onChangecity"  @province="onChangeprovince"></v-distpicker>
-                        </p>
+                        <el-cascader
+                            size="large"
+                            :options="citylist"
+                            v-model="selectedOptions"
+                            @change="handleChange">
+                        </el-cascader>
                   </div>
                 </li>
                 <li>
@@ -70,11 +73,31 @@
         </div>
         <div class="info-basic">
             <div class='tip'>详情描述（必填）</div>
-               <vue-editor id="editor"
-               useCustomImageHandler
-               @imageAdded="handleImageAdded"
-                v-model="describe">
-              </vue-editor>
+            <div class="content">
+                <div class='title'>
+                    描述内容
+                </div>
+                <textarea v-model="describe"></textarea>
+            </div>
+             <div class="upload">
+                <div class='title'>
+                    上传图片
+                </div>
+                <div class="img">
+                    <el-upload
+                        action="http://www.youbian.link/api/v1/release/img"
+                        list-type="picture-card"
+                        name='img'
+                        :on-success='success'
+                        :on-preview="handlePictureCardPreview"
+                        :on-remove="handleRemove">
+                        <i class="el-icon-plus"></i>
+                        </el-upload>
+                        <el-dialog :visible.sync="dialogVisible">
+                        <img width="100%" :src="dialogImageUrl" alt="">
+                    </el-dialog>
+                </div>
+            </div>
         </div>
         <div class="btnbox">
             <div class="btn" @click='send'>
@@ -85,8 +108,7 @@
 </template>
 <script>
 import Token from '../../store/token'
-import { VueEditor } from 'vue2-editor'
-import VDistpicker from 'v-distpicker'
+import {regionData} from 'element-china-area-data'
 export default {
   data() {
     return {
@@ -103,24 +125,41 @@ export default {
       city_code:'',
       area_code:'',
       isClock:false,
+      citylist:regionData,
+      selectedOptions:[],
+      dialogImageUrl: '',
+      dialogVisible: false,
+      img:[],
     };
   },
-  components: {
-       VueEditor,
-       VDistpicker
-   },
    computed:{
       options:function(){
       return this.$store.state.allCate
     }
    },
   methods: {
+    handleRemove(file, fileList) {
+        console.log(file, fileList);
+    },
+    handlePictureCardPreview(file) {
+        this.dialogImageUrl = file.url;
+        this.dialogVisible = true;
+    },
+    success(res, file, fileList){
+        this.img.push(res.data)
+        console.log(this.img)
+    },
     jiami(){
       if(this.isClock){
         this.isClock=false
       }else{
         this.isClock=true;
       }
+    },
+    handleChange(value) {
+      this.province_code=value[0];
+      this.city_code = value[1];
+      this.area_code = value[2]
     },
     send(){
       console.log(this.describe)
@@ -136,6 +175,7 @@ export default {
           var city_code = this.city_code;
           var video_url =  this.video_url;
           var describe = this.describe;
+          var img = this.img.toString();
           var data={
             title,
             price,
@@ -148,7 +188,8 @@ export default {
             area_code,
             city_code,
             video_url,
-            describe
+            describe,
+            img
           }
           this.$http.post(
             'http://www.youbian.link/api/v1/release/release_info',
@@ -257,6 +298,33 @@ export default {
     background-color: #fff;
     margin-bottom:30px;
     border-radius:10px;
+    .content{
+        .title{
+            float: left;
+            color:#666;
+        }
+        textarea{
+            padding:10px;
+            box-sizing: border-box;
+            width: 600px;
+            margin-left:30px;
+            height: 160px;
+            border:1px solid #eaeaea;
+        }
+    }
+     .upload{
+          padding-top:5px;
+          overflow: hidden;
+          .title{
+              float: left;
+              color:#666;
+              margin-right:30px;
+          }
+          .img{
+              float: left;
+              width: 625px;
+          }
+      }
     .infolist{
       li{
         line-height: 40px;

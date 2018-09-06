@@ -13,6 +13,7 @@ import Rank from '@/pages/rank'
 import PushInfo from '@/pages/push'
 import GoToUser from '@/pages/toUser'
 import Mine from '@/pages/mine'
+import Suggest from '@/pages/suggest'
 //push下子路由
 import Info from '@/components/pushgroup/info'
 import Reinfo from '@/components/pushgroup/reinfo'
@@ -50,6 +51,10 @@ export default new Router({
       path: '/home',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/suggest',
+      component: Suggest
     },
     {
       path: '/user',

@@ -11,11 +11,11 @@
                 </div>
                 <div class="iptbox">
                     <span class='star'>*</span><span class='text' >新手机号：</span>
-                    <input type="password" class="oldpwd ipt " placeholder="请输入新手机号码" v-model="password">
+                    <input type="text" class="oldpwd ipt " placeholder="请输入新手机号码" v-model="phone">
                 </div>
                 <div class="iptbox">
                     <span class='star'>*</span><span class='text'>验证码：</span>
-                    <input type="text" class="checkcode ipt" placeholder="请输入验证码" v-model="password2" >
+                    <input type="text" class="checkcode ipt" placeholder="请输入验证码" v-model="checkcode" ><button class='getcode' @click='getcode' :disabled="disabled">{{m}}</button>
                 </div>
             </div>
            <button class="updateinfo" @click='changetel'>完成修改</button>
@@ -28,10 +28,10 @@ import qs from 'qs'
     export default{
         data(){
             return {
-                password:'',
-                password2:'',
-                password2_confirm:'',
-                m:0
+                phone:'',
+                checkcode:'',
+                m:'获取验证码',
+                disabled:false
             }
         },
         computed:{
@@ -45,7 +45,53 @@ import qs from 'qs'
         },
         methods:{
             changetel(){
-                
+                var data = {
+                    phone:this.phone,
+                    code:this.checkcode
+                }
+                this.$http({
+                    method:'get',
+                    url:'http://www.youbian.link/api/v1/user/phone_edit',
+                    params:data,
+                    headers:{
+                        token:Token.fetch()
+                    }
+                }).then(res=>{
+                    if(res.code==200){
+                        this.$message({
+                            message: res.message,
+                            type: 'success'
+                        });
+                    }else{
+                        this.$message({
+                            message: res.message,
+                            type: 'warning'
+                        });
+                    }
+                })
+            },
+            getcode(){
+                var m=60;
+                var timer = window.setInterval(()=>{
+                    if(m>1){
+                        m--;
+                        this.m=m+'秒后重试';
+                        console.log(this.m)
+                        this.disabled=true
+                    }else{
+                        this.m='获取验证码'
+                        this.disabled=false
+                    }
+                },1000)
+                var data = {
+                    phone:this.phone
+                }
+                this.$http.post(
+                    'http://www.youbian.link/api/v1/member/sendSms',
+                    data,
+                ).then(res=>{
+                    console.log(res)
+                })
             }
         }
     }
@@ -96,6 +142,19 @@ import qs from 'qs'
                 }
                 .checkcode{
                     width: 160px;
+                }
+                .getcode{
+                    width: 110px;
+                    height: 30px;
+                    border:1px solid #ea910f;
+                    color:#ea910f;
+                    background-color: #fff;
+                    margin-left:10px;
+                    border-radius:4px;
+                }
+                .getcode:hover{
+                    background-color: #ea910f;
+                    color:#fff;
                 }
             }
         }

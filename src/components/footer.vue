@@ -69,7 +69,7 @@
                         <ul>
                             <router-link :to="{path:'/newsmain',query:{title_id:5}}" tag='li'>常见分类</router-link>
                             <router-link :to="{path:'/newsmain',query:{title_id:6}}" tag='li'>更多帮助</router-link>
-                            <li>意见反馈</li>
+                            <router-link to='/suggest' tag='li'>意见反馈</router-link>
                             <router-link :to="{path:'/newsmain',query:{title_id:7}}" tag='li'>隐私权条款</router-link>
                         </ul>
                     </li>
@@ -78,8 +78,17 @@
                         <ul>
                             <router-link :to="{path:'/newsmain',query:{title_id:8}}" tag='li'>了解优便</router-link>
                             <router-link :to="{path:'/newsmain',query:{title_id:9}}" tag='li'>加入优便</router-link>
-                            <li>新浪微博</li>
-                            <li>优便公众号</li>
+                            <li style='position:relative' class='sina'>
+                                新浪微博
+                                <div class="sinabox">
+                                    <img src="../assets/pic/sina.png" alt="">
+                                </div>
+                            <li style='position:relative'  class='wechat'>
+                                优便公众号
+                                <div class="wechatbox">
+                                    <img src="../assets/pic/wechat.jpg" alt="">
+                                </div>
+                            </li>
                         </ul>
                     </li>
                     <li class='lf'>
@@ -103,6 +112,33 @@
     }
 </script>
 <style scoped lang='less'>
+.sina:hover .sinabox{
+    display: block;
+}
+.wechat:hover .wechatbox{
+    display: block;
+}
+.sinabox,.wechatbox{
+    position:absolute;
+    left:-25px;
+    background-color: #fff;
+    width: 100px;
+    height: 100px;
+    padding:10px;
+    border-radius:4px;
+    border:1px solid #eaeaea;
+    z-index: 9999;
+    display: none;
+    img{
+        width: 100%;
+    }
+}
+.sinabox{
+    bottom:-25px;
+}
+.wechatbox{
+        bottom:0px;
+}
 /**/
 .lf{
     margin-left:38px;
@@ -131,6 +167,7 @@ footer{
                 float: left;
                 width: 300px;
                 .circle{
+                    transition: all 1s;
                     display:inline-block;
                     vertical-align: middle;
                     line-height: 80px;
@@ -144,16 +181,19 @@ footer{
                         height: 40px;
                     }
                 }
+                .circle:hover{
+                    transform:rotate(360deg);
+                }
                 .content{
-                    padding:10px;
+                    padding:5px 10px;
                     color:#4f4f4f;
                     .content-title{
                         line-height: 40px;
-                        font-size:22px;
+                        font-size:18px;
                     }
                     .content-text{
                         line-height: 20px;
-                        font-size:18px;
+                        font-size:16px;
                     }
                 }
             }
@@ -174,7 +214,7 @@ footer{
                             cursor: pointer;
                         }
                         li:hover{
-                            color:#333;
+                            color:#dd5519;
                         }
                     }
                 }
@@ -192,7 +232,7 @@ footer{
             line-height: 16px;
 
             .service-title{
-                font-size:18px;
+                font-size:16px;
                 color:#4f4f4f;
                 font-weight: bold;
                 margin-bottom:10px;
@@ -203,7 +243,7 @@ footer{
             }
             li{
                 color:#8c8c8c;
-                font-size:16px;
+                font-size:14px;
                 line-height: 32px;
             }
         }
@@ -217,7 +257,7 @@ footer{
     .footer-bottom{
         margin:auto;
         width: 1200px;
-        font-size:16px;
+        font-size:14px;
         color:#656565;
         height: 50px;
         line-height: 50px;

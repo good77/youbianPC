@@ -8,6 +8,7 @@ vue.use(vuex);
 const state={
 	//主页banner
 	bannerList:[],
+	quick:'',
 	//主页三级分类
 	cate:[],
 	hotCate:[],
@@ -29,7 +30,8 @@ const state={
 	//活动详情
 	actMain:'',
 	//接发榜单
-	rank:'',
+	rankRec:'',
+	rankSend:'',
 	//同城便商品列表
 	goodsList:[],
 	goodsDetail:'',
@@ -58,6 +60,10 @@ export default new vuex.Store({
 		//首页banner图
 		setBanner(context,data){
 			state.bannerList=data.banner;
+		},
+		setQuick(state,data){
+			state.quick = data;
+			console.log(state.quick)
 		},
 		//首页三级分类
 		setCate(context,data){
@@ -113,8 +119,11 @@ export default new vuex.Store({
 			state.actMain=data
 		},
 		//榜单
-		setRank(context,data){
-			state.rank=data
+		setRankRec(context,data){
+			state.rankRec=data
+		},
+		setRankSend(context,data){
+			state.rankSend=data
 		},
 		//tcb商品列表
 		setGoodsList(context,data){
@@ -187,6 +196,15 @@ export default new vuex.Store({
 	actions:{
 		setToken(context,token){
 			Token.save(token)
+		},
+		getQuick(context){
+			$http({
+				method:'get',
+				url:'http://www.youbian.link/api/v1/head/index',
+			}).then(res=>{
+				var data = res.data.data;
+				context.commit('setQuick',data)
+			})
 		},
 		getIndex(context) {
             $http({
@@ -325,7 +343,7 @@ export default new vuex.Store({
 					console.log(result)
                 }else{
 					var data = result.data;
-					context.commit("setRank",data);
+					context.commit("setRankSend",data);
                 }
             });
 		},
@@ -343,7 +361,7 @@ export default new vuex.Store({
 					console.log(result)
                 }else{
 					var data = result.data;
-					context.commit("setRank",data);
+					context.commit("setRankRec",data);
                 }
             });
 		},

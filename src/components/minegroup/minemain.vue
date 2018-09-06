@@ -3,20 +3,20 @@
         <div class="mine-nav">
             <router-link tag='p' to='/mine/home' class='title'>个人中心</router-link>
             <p class='vice-title'>账号管理<i class='el-icon-arrow-down'></i></p>
-            <router-link tag='div' to='/mine/myinfo' class="navitem" >
+            <router-link tag='div' to='/mine/myinfo' class="navitem" active-class="isActive">
                 <img src="../../assets/pic/grzl.png" alt="" class='icon'>个人资料
             </router-link>
-            <router-link tag='div' to='/mine/setpwd' class="navitem">
+            <router-link tag='div' to='/mine/setpwd' class="navitem" active-class="isActive">
                 <img src="../../assets/pic/mmsz.png" alt="" class='icon'>密码设置
             </router-link>
             <p class='vice-title'>订单管理<i class='el-icon-arrow-down'></i></p>
-            <router-link tag='div' to='/mine/yfbd' class="navitem">
+            <router-link tag='div' to='/mine/yfbd' class="navitem" active-class="isActive">
                 <img src="../../assets/pic/yfbd.png" alt="" class='icon'>已发布的
             </router-link>
-            <router-link tag='div' to='/mine/bjsd' class="navitem">
+            <router-link tag='div' to='/mine/bjsd' class="navitem" active-class="isActive">
                <img src="../../assets/pic/bjsd.png" alt="" class='icon'>被接收的
             </router-link>
-            <router-link tag='div' to='/mine/yjsd' class="navitem">
+            <router-link tag='div' to='/mine/yjsd' class="navitem" active-class="isActive">
                 <img src="../../assets/pic/yjsd.png" alt="" class='icon'>已接收的
             </router-link>
         </div>
@@ -35,6 +35,9 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.isActive{
+    color:#dd5519!important;
+}
 /*icon*/
 .icon{
     height: 14px;
@@ -56,7 +59,7 @@ export default {
         background-color: #eef3f5;
         div:hover{
             cursor: pointer;
-            color:#999;
+            color:#db5618;
         }
         .title{
             text-indent:15px;;

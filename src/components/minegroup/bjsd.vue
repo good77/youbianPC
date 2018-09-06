@@ -355,16 +355,17 @@ import Token from '../../store/token'
         height: 34px;
         width: 400px;
         overflow: hidden;
-        line-height: 34px;
         .srhtext{
+            line-height: 34px;
+            vertical-align: top;
             border:0;
             width: 269px;
-            font-size: 16px;
+            font-size: 14px;
             text-indent: 12px;
             height: 34px;
         }
         .srh-btn{
-            font-size:18px;
+            font-size:16px;
             width: 131px;
             height: 38px;
             line-height: 34px;

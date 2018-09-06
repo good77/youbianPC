@@ -34,6 +34,7 @@
                 if(title_id){
                     this.$store.dispatch('getFooter1',title_id)
                 }
+                window.scrollTo(0,0);  
             }
         },
         mounted(){
@@ -45,6 +46,7 @@
             if(title_id){
                  this.$store.dispatch('getFooter1',title_id)
             }
+            window.scrollTo(0,0);  
         }
     }
 </script>
@@ -57,7 +59,7 @@
     width: 1200px;
     margin:auto;
     .guide{
-        font-size:24px;
+        font-size:16px;
         padding:20px 0 20px 0;
         color:#3f3f3f;
         .vice-guide{

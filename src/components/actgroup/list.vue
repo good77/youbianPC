@@ -90,23 +90,27 @@
     width: 1200px;
     margin:auto;
     .acttabs{
-        height: 100px;
+        height: 60px;
         border-bottom:2px solid #999999;
         li{
-            font-size:30px;
+            font-size:20px;
             color:#404040;
             float: left;
-            line-height: 100px;
+            line-height: 60px;
             text-align: center;
             width: 200px;
             margin-left:100px;
             margin-right:100px;
-            height: 100px;
+            height: 60px;
+        }
+        li:hover{
+            cursor: pointer;
+            color:#ea9314;
         }
     }
     .actlist{
         overflow: hidden;
-        padding-top:60px;
+        padding-top:20px;
         li{
             float: left;
             margin-bottom: 40px;

@@ -12,6 +12,7 @@
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "china-city-data": "^1.0.1",
+    "element-china-area-data": "^4.1.1",
     "element-ui": "^2.4.5",
     "less": "^3.8.0",
     "less-loader": "^4.1.0",

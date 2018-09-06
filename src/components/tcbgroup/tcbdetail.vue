@@ -6,10 +6,10 @@
                     <div class="title">
                         {{goodsDetail.title}}
                         <span :v-show="goodsDetail.encryption==1">
-                            <img src="../../assets/pic/icon-you.png" alt="" class='icon-you'>
+                            <img src="../../assets/pic/icon-you.png" alt="" class='icon-you' v-if='goodsDetail.order_type==2'>
                         </span>
                         <span :v-show="goodsDetail.encryption==1">
-                            <img src="../../assets/pic/icon-lock.png" alt="" class='icon-lock'>
+                            <img src="../../assets/pic/icon-lock.png" alt="" class='icon-lock' v-if='goodsDetail.encryption==1'>
                         </span>
                     </div>
                     <div class="type-date">
@@ -30,7 +30,7 @@
                 </div>
                 <div class="abs-bottom">
                     <button class='ljjd' @click='getOrder'>立即接单</button>
-                    <a target="_blank"  :href="goodsDetail.file" download="w3logo" class='xzfj'><i class='el-icon-download'></i> 下载附件</a>
+                    <a target="_blank"  :href="goodsDetail.file" download="w3logo" class='xzfj' v-if='goodsDetail.file'><i class='el-icon-download'></i> 下载附件</a>
                     <button class='fxdd'><i class='el-icon-share'></i>分享订单</button>
                 </div>
             </div>
@@ -59,6 +59,11 @@
                         您的浏览器不支持 video 标签。
                     </video>
                     <div v-html='goodsDetail.describe'></div>
+                    <ul style='margin-top:20px;'>
+                        <li v-for="(item,key) in goodsDetail.img" :key=key>
+                          <img :src="item" alt="" />
+                        </li>
+                    </ul>
                 </div>
                 <div class="comments">
                     <p class='qbpl'>全部评论({{goodsDetail.order_comments.length}})</p>

@@ -9,7 +9,7 @@
             </div>
             <ul class="type-text font-color-1">
                 <li v-for='(item,key) in hotCate[0].sons'>
-                    <router-link :to="{path:'/tcb',query:{level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
+                    <router-link :to="{path:'/tcb',query:{level_one:hotCate[0].id,level_two:item.parent_id,level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
                 </li>
             </ul>
         </li>
@@ -22,7 +22,7 @@
             </div>
             <ul class="type-text font-color-2">
                  <li v-for='(item,key) in hotCate[1].sons'>
-                    <router-link :to="{path:'/tcb',query:{level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
+                    <router-link :to="{path:'/tcb',query:{level_one:hotCate[1].id,level_two:item.parent_id,level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
                 </li>
             </ul>
         </li>
@@ -35,7 +35,7 @@
             </div>
             <ul class="type-text font-color-3">
                <li v-for='(item,key) in hotCate[2].sons'>
-                    <router-link :to="{path:'/tcb',query:{level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
+                    <router-link :to="{path:'/tcb',query:{level_one:hotCate[2].id,level_two:item.parent_id,level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
                 </li>
             </ul>
         </li>
@@ -48,7 +48,7 @@
             </div>
             <ul class="type-text font-color-4">
                 <li v-for='(item,key) in hotCate[3].sons'>
-                    <router-link :to="{path:'/tcb',query:{level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
+                    <router-link :to="{path:'/tcb',query:{level_one:hotCate[3].id,level_two:item.parent_id,level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
                 </li>
             </ul>
         </li>
@@ -59,6 +59,11 @@
         computed:{
             hotCate:function(){
                 return this.$store.state.hotCate;
+            }
+        },
+        watch:{
+            hotCate:function(){
+                console.log(this.hotCate)
             }
         }
     }
@@ -100,7 +105,6 @@
     justify-content: space-between;
     li{
         width: 290px;
-        height: 30px;
         background-color: #fff;
         list-style:none;
         .bgpic{
@@ -134,22 +138,21 @@
         }
         .type-text{
             padding-top:10px;
-            text-align: center;
-            font-size:18px;
-            line-height: 28px;
-            height:95px;
+            font-size:16px;
+            height: 100px;
             background-color: #fff;
-            display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
             padding:0 20px;
             li{
-                width: 120px;
+                float: left;
+                width: auto;
                 text-align: center;
+                height: 30px;
+                line-height: 30px;
             }
             li:hover{
                 cursor: pointer;
-                color:#47aae9;
+                color:#ccc;
             }
         }
     }

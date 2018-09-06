@@ -40,9 +40,12 @@
                             <img src="../../assets/pic/icon-adress.png" alt="" class='icon'>
                             地　　址：
                             <span>  
-                                  <p class="distpicker-address-wrapper">
-                                    <v-distpicker @area="onChangeArea" @city="onChangecity"  @province="onChangeprovince" :province="userInfo.province_code" :city="userInfo.city_code" :area='userInfo.area_code'></v-distpicker>
-                                  </p>
+                                    <el-cascader
+                                        size="large"
+                                        :options="options"
+                                        v-model="selectedOptions"
+                                        @change="handleChange">
+                                    </el-cascader>
                             </span>
                         </li>
                         <li>
@@ -65,8 +68,8 @@
     </div>
 </template>
 <script>
+import {regionData} from 'element-china-area-data'
 import "babel-polyfill";
-import VDistpicker from 'v-distpicker'
 import myUpload from 'vue-image-crop-upload'
 import Token from '../../store/token'
 export default {
@@ -83,12 +86,13 @@ export default {
 			headers: {
 				token: Token.fetch(),
 			},
-			imgDataUrl: '' // the datebase64 url of created image
+      imgDataUrl: '', // the datebase64 url of created image,
+      options: regionData,
+      selectedOptions: []
     }
   },
   components: {
        myUpload,
-       VDistpicker
 	},
   methods:{
       setinfo(){
@@ -108,14 +112,10 @@ export default {
           console.log(res)
         })
       },
-      onChangeArea(a){
-        this.area_code=a.code;  
-      },
-      onChangecity(a){
-        this.city_code=a.code;
-      },
-      onChangeprovince(a){
-        this.province_code=a.code;
+      handleChange(value) {
+        this.province_code=value[0];
+        this.city_code = value[1];
+        this.area_code = value[2]
       },
       toggleShow() {
 				this.show = !this.show;
@@ -161,6 +161,20 @@ export default {
         return this.$store.state.userInfo
       },
   },
+  mounted(){
+    this.$http({
+      method:'get',
+      url:'http://www.youbian.link/api/v1/user/user_edit',
+      headers:{
+        token:Token.fetch()
+      }
+    }).then(res=>{
+      var data = res.data.data;
+      this.selectedOptions.push(data.province_code);
+      this.selectedOptions.push(data.city_code);
+      this.selectedOptions.push(data.area_code);
+    })
+  }
 };
 </script>
 <style lang="less" scoped>
@@ -236,7 +250,7 @@ export default {
               margin-left:6px;
             text-indent: 10px;
             height: 40px;
-            width: 180px;
+            width: 214px;
             border-radius: 4px;
             border: 1px solid rgba(0, 0, 0, 0.15)
           }

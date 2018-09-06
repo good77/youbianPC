@@ -8,7 +8,7 @@
                 <input type="password" class='pwd'  placeholder="请输入密码" v-model="password">
                 <input type="repassword" class='pwd'  placeholder="请确认密码" v-model="repassword">
                 <input type="text" class='checkcode'  placeholder="请输入验证码" v-model="checkcode">
-                <button class='checkcode-btn' @click="getcode">获取验证码</button>
+                <button class='checkcode-btn' @click="getcode" :disabled="disabled">{{m}}</button>
                 <div class="agree">
                     <span class='losepwd'>我已阅读<span class='zcxy'>《优便注册协议》</span></span>
                 </div>
@@ -29,26 +29,36 @@ import qs from 'qs'
                 password:'',
                 repassword:'',
                 checkcode:'',
+                m:'获取验证码',
+                disabled:false
             }
         },
         methods:{
             getcode(){
-                var phone= this.phone;
-                var data={
-                    phone
+                 var m=60;
+                var timer = window.setInterval(()=>{
+                    if(m>1){
+                        m--;
+                        this.m=m+'秒后重试';
+                        console.log(this.m)
+                        this.disabled=true
+                    }else{
+                        this.m='获取验证码'
+                        this.disabled=false
+                    }
+                },1000)
+                var data = {
+                    phone:this.phone
                 }
                 this.$http.post(
-                    'http://www.youbian.link/api/v1/member/SendSms', 
-                    qs.stringify(data), 
-                    {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-                )
-                
-                    .then(function (response) {
-                    console.log(response);
-                    })
-                    .catch(function (error) {
-                    console.log(error);
+                    'http://www.youbian.link/api/v1/member/sendSms',
+                    data,
+                ).then(res=>{
+                   this.$message({
+                            message: res.data.message,
+                            type: 'warning'
                     });
+                })
              },
             register(){
                 var name=this.username;
@@ -140,6 +150,10 @@ import qs from 'qs'
             background-color: #fff;
             border:1px solid #dd5519;
             color:#dd5519;
+        }
+        .checkcode-btn:hover{
+            color:#fff;
+            background-color: #dd5519;
         }
     }
 }

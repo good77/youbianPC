@@ -207,6 +207,10 @@ import qs from 'qs'
             margin-left:20px;
             color:#404040;
         }
+        .getlose:hover{
+            cursor: pointer;
+            color:#db5618;
+        }
     }
 }
 </style>

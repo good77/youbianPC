@@ -16,7 +16,6 @@
 export default {
   name: 'App',
   mounted(){
-    document.title='优便'
        this.$store.dispatch('getIndex')
         this.$store.dispatch('getFooter')
   },
@@ -43,6 +42,7 @@ export default {
 }
 body{
   background-color: #eff3f5;
+  font-size:14px;
 }
 input,button,textarea{
   outline: none !important;
@@ -60,7 +60,7 @@ button:hover{
   right:50px;
   background-color: #fff;
   border:1px solid #eaeaea;
-  padding:10px;
+  padding:4px;
   border-radius:3px;
 }
 .kefu,.gotop{
