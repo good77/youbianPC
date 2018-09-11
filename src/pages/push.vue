@@ -18,6 +18,11 @@
         components:{
             HeaderCom,
             FooterCom
+        },
+        created(){
+            if(!window.sessionStorage.getItem('token')){
+                this.$router.push('/user/login')
+            }
         }
     }
 </script>

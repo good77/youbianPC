@@ -134,6 +134,7 @@ import Token from '../../store/token'
             flex-wrap: wrap;
             padding:30px 140px 20px 140px;
             .vipbox{
+                box-sizing: border-box;
                 margin-bottom:30px;
                 overflow: hidden;
                 width: 244px;

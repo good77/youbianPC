@@ -133,7 +133,7 @@
       left: 500px;
       top: 174px;
       .circle {
-          overflow: hidden;
+        overflow: hidden;
         width: 208px;
         height: 208px;
         border-radius: 50%;
@@ -141,17 +141,20 @@
         margin-bottom: 30px;
         img{
             width: 100%;
-
         }
       }
     }
     .user-second {
       .circle {
+          overflow: hidden;
         width: 162px;
         height: 162px;
         border-radius: 50%;
         background-color: #000;
         margin-bottom: 30px;
+        img{
+            width: 100%;
+        }
       }
       left: 277px;
       top: 225px;

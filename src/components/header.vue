@@ -8,6 +8,9 @@
                     <span @click='showCity' class='showcity'>[切换城市]</span>
                     <div class="citybox" v-if="show">
                         <p>城市选择</p>
+                        <div class="closebtn" @click="closeCity">
+                            关闭 X
+                        </div>
                         <ul class='limit'>
                             <li @click='limit(1)' :class='{isLimit:isLimit==1}'>热门</li>
                             <li @click='limit(2)' :class='{isLimit:isLimit==2}'>ABCDE</li>
@@ -20,7 +23,7 @@
                             <div class="title">热门</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.hot" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.hot" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -30,7 +33,7 @@
                             <div class="title">A</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.A" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.A" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -38,7 +41,7 @@
                             <div class="title">B</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.B" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.B" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -46,7 +49,7 @@
                             <div class="title">C</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.C" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.C" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -54,7 +57,7 @@
                             <div class="title">D</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.D" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.D" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -62,7 +65,7 @@
                             <div class="title">E</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.E" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.E" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -72,7 +75,7 @@
                             <div class="title">F</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.F" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.F" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -80,7 +83,7 @@
                             <div class="title">G</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.G" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.G" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -88,7 +91,7 @@
                             <div class="title">H</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.H" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.H" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -96,7 +99,7 @@
                             <div class="title">J</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.J" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.J" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -106,7 +109,7 @@
                             <div class="title">K</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.K" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.K" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -114,7 +117,7 @@
                             <div class="title">L</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.L" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.L" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -122,7 +125,7 @@
                             <div class="title">M</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.M" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.M" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -130,7 +133,7 @@
                             <div class="title">N</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.N" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.N" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -140,7 +143,7 @@
                             <div class="title">P</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.P" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.P" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -148,7 +151,7 @@
                             <div class="title">Q</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.Q" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.Q" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -156,7 +159,7 @@
                             <div class="title">R</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.R" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.R" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -164,7 +167,7 @@
                             <div class="title">S</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.S" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.S" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -172,7 +175,7 @@
                              <div class="title">T</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.T" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.T" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -182,7 +185,7 @@
                             <div class="title">W</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.W" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.W" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -190,7 +193,7 @@
                             <div class="title">X</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.X" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.X" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -198,7 +201,7 @@
                             <div class="title">Y</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.Y" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.Y" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -206,7 +209,7 @@
                             <div class="title">Z</div>
                             <div class='itembox'>
                                 <ul class="item">
-                                    <li v-for="(item,key) in cityList.Z" :key="key" @click='changecity(item.name)'>
+                                    <li v-for="(item,key) in cityList.Z" :key="key" @click='changecity(item)'>
                                         {{item.name}}
                                     </li>
                                 </ul>
@@ -245,7 +248,7 @@
                 <ul class="nav">
                     <router-link tag='li' to='/mine/home' class='nav-text'>个人中心</router-link>
                     <router-link tag='li' to='/mine/vipup' class='nav-text'>会员升级</router-link>
-                    <router-link :to="{path:'/newsmain',query:{title_id:6}}" tag='li' class='nav-text'>帮助中心</router-link>
+                    <li class='nav-text' @click='gobottom'>帮助中心</li>
                     <li class='lastson'>
                         快速导航
                         <div class="quick">
@@ -295,8 +298,8 @@
                     <img src="../assets/pic/home.png" alt="" class='icon-home'>
                     首页
                 </router-link>
-                <router-link tag="li" :to="{path:'/tcb',query:{level_one:10}}"  class='other-child' active-class="active" v-on:click="isActive='2'">同城便</router-link>
-                <router-link tag="li" to="/act"  class='other-child' active-class="active">活动专区</router-link>
+                <router-link tag="li" :to="{path:'/tcb',query:{level_one:10}}"  class='other-child' :class="{active:this.$route.query.level_one==10}">同城便</router-link>
+                <router-link tag="li" to="/act"  class='other-child' :class="{active:this.$route.path=='/act'}">活动专区</router-link>
                 <router-link tag="li" to="/rank/send" class='other-child' active-class="active">发布榜单</router-link>
                 <router-link tag="li" to="/rank/rec"  class='other-child' active-class="active">接收榜单</router-link>
             </ul>
@@ -308,23 +311,40 @@ import cityList from 'china-city-data';
     export default{
         data(){
             return {
-                city:'武汉',
                 srhtext:'',
                 username:window.sessionStorage.getItem('username'),
                 isLimit:1,
                 cityList,
-                show:false
+                show:false,
+                city:'全国'
             }
         },
         computed:{
             quick:function(){
                 return this.$store.state.quick.cate
-            }
+            },
         },
         methods:{
+            gobottom(){
+                var flag = 0;
+                var scrollToTop = window.setInterval(function() {
+                    var pos = window.pageYOffset;
+                    if (flag <100 ) {
+                        flag++;
+                        window.scrollTo( 0, pos + 50 ); // how far to scroll on each step
+                    } else {
+                        window.clearInterval( scrollToTop );
+                    }
+                }, 5);
+            },
+            closeCity(){
+                this.show=false
+            },
             changecity(city){
                 this.show=false;
-                this.city=city
+                this.city = city.name
+                window.sessionStorage.setItem('cityname',city.name)
+                window.sessionStorage.setItem('citycode',city.id)
             },
             logout(){
                 sessionStorage.clear();
@@ -354,6 +374,9 @@ import cityList from 'china-city-data';
         },
         mounted(){
             this.$store.dispatch('getQuick')
+            if(window.sessionStorage.getItem('cityname')){
+                this.city = window.sessionStorage.getItem('cityname')
+            }
         }
     }
 </script>
@@ -559,7 +582,7 @@ header{
 //城市选择器
 .isLimit{
     color:#fff!important;
-    background-color: #d0000e!important;
+    background-color: #ea910f!important;
 }
 .citybox{
     font-size:12px;
@@ -572,6 +595,21 @@ header{
     box-shadow:1px 1px 5px #eaeaea;
     position:absolute;
     z-index: 999999;
+    .closebtn{
+        position: absolute;
+        right:5px;
+        top:5px;
+        padding:2px;
+        box-shadow: 1px 1px 3px #eaeaea;
+        height: 16px;
+        line-height: 16px;
+    }
+    .closebtn:hover{
+        cursor: pointer;
+        box-shadow: 1px 1px 3px #f2f2f2;
+        opacity: .9;
+        color:#999;
+    }
     .limit{
         display: flex;
         justify-content: space-around;
@@ -582,7 +620,7 @@ header{
             background-color: #f2f2f3;
         }
         li:hover{
-            color:#d0000e;
+            color:#ea910f;
         }
     }
     .citylist{
@@ -591,7 +629,7 @@ header{
             float: left;
             width: 40px;
             font-size:15px;
-            color:#d0000e;
+            color:#ea910f;
         }
         .itembox{
             width: 280px;
@@ -604,7 +642,7 @@ header{
                     margin-left:5px;
                 }
                 li:hover{
-                    color:#d0000e;
+                    color:#ea910f;
                     cursor: pointer;
                 }
             }

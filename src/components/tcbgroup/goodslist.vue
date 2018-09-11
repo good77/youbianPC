@@ -245,35 +245,36 @@
             },
             handleChange(value) {
                 if(value.length==3){
-                this.level_one=value[0];
-                this.level_two=value[1];
-                this.level_three=value[2];
-                var type = this.order;
-                var order_type = this.state;
-                var time = this.date;
-                var level_one = this.level_one;
-                var level_two = this.level_two;
-                var level_three = this.level_three;
-                var price = this.price;
-                var data={
-                    level_one,
-                    level_three,
-                    level_two,
-                    time,
-                    price,
-                    type,
-                    order_type
-                }
-                this.$http.post(
-                    'http://www.youbian.link/api/v1/index/same_city',
-                    data
-                ).then(res=>{
-                    console.log(res)
-                    if(res.data.code==200){
-                    var data = res.data.data.order_list.data;
-                    this.$store.dispatch('srhGoods',data)
+                    this.level_one=value[0];
+                    this.level_two=value[1];
+                    this.level_three=value[2];
+                    var type = this.order;
+                    var order_type = this.state;
+                    var time = this.date;
+                    var level_one = this.level_one;
+                    var level_two = this.level_two;
+                    var level_three = this.level_three;
+                    var price = this.price;
+                    var data={
+                        level_one,
+                        level_three,
+                        level_two,
+                        time,
+                        price,
+                        type,
+                        order_type
                     }
-                })
+                    this.$http.post(
+                        'http://www.youbian.link/api/v1/index/same_city',
+                        data
+                    ).then(res=>{
+                        console.log(res)
+                        if(res.data.code==200){
+                        var data = res.data.data.order_list.data;
+                        this.$store.dispatch('srhGoods',data)
+                        }
+                    })
+                    this.$router.push({path:'/tcb',query:{level_one:this.level_one,level_two:this.level_two,level_three:this.level_three}})
                 }
             },
             changeDate(value){
@@ -616,7 +617,7 @@
     li{
         height: 50px;
         line-height: 50px;
-        margin:0 20px;
+        margin:0 8px;
         text-align: center;
     }
     li:hover{

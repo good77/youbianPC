@@ -35,13 +35,13 @@
                  <li>
                   <span class='xinghao'>*</span>价格
                   <div class='iptbox'>
-                    <el-input  placeholder="请输入单价（积分）" v-model="price" @change="changePrice"></el-input>
+                    <el-input  placeholder="请输入单价（积分）" v-model="price" @change="changePrice" type='number'></el-input>
                   </div>
                 </li>
                  <li>
                   <span class='xinghao'>*</span>次数
                   <div class='iptbox'>
-                    <el-input  placeholder="请输入次数（可完成次数）" v-model="number"  @change="changeNumber"></el-input>
+                    <el-input  placeholder="请输入次数（可完成次数）" v-model="number"  @change="changeNumber" type='number'></el-input>
                   </div>
                 </li>
                  <li>
@@ -62,10 +62,17 @@
                     <el-input  placeholder="请输入视频连接" v-model="video_url"></el-input>
                   </div>
                 </li>  
-                <li>
-                  附件
-                  <div class='iptbox'>
-                    <input type="file">
+                <li style="overflow:hidden;height:auto">
+                  <div style='float:left'>附件</div>
+                  <div class='iptbox' style="float:left">
+                    <el-upload
+                      action="http://www.youbian.link/api/v1/release/file"
+                      :on-success='success1'
+                      name='img'
+                      :limit="1"
+                      :file-list="fileList1">
+                      <el-button size="small" type="primary">点击上传</el-button>
+                    </el-upload>
                     <span class='jiami' :class='{isClock:isClock==1}' @click='jiami'><i class='el-icon-success'>文件加密</i></span>
                   </div>
                 </li>        
@@ -124,12 +131,14 @@ export default {
       province_code:'',
       city_code:'',
       area_code:'',
-      isClock:false,
+      isClock:0,
       citylist:regionData,
       selectedOptions:[],
       dialogImageUrl: '',
       dialogVisible: false,
       img:[],
+      file:'',
+      fileList1:[]
     };
   },
    computed:{
@@ -149,11 +158,14 @@ export default {
         this.img.push(res.data)
         console.log(this.img)
     },
+    success1(res, file, fileList){
+        this.file=res.data
+    },
     jiami(){
-      if(this.isClock){
-        this.isClock=false
+      if(this.isClock==1){
+        this.isClock=0
       }else{
-        this.isClock=true;
+        this.isClock=1;
       }
     },
     handleChange(value) {
@@ -176,6 +188,9 @@ export default {
           var video_url =  this.video_url;
           var describe = this.describe;
           var img = this.img.toString();
+          var encryption = this.isClock;
+          var file = this.file;
+          console.log(this.file)
           var data={
             title,
             price,
@@ -189,8 +204,11 @@ export default {
             city_code,
             video_url,
             describe,
-            img
+            img,
+            encryption,
+            file
           }
+          
           this.$http.post(
             'http://www.youbian.link/api/v1/release/release_info',
             data,

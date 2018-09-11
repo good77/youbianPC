@@ -155,6 +155,10 @@
         border-radius: 50%;
         background-color: #000;
         margin-bottom: 30px;
+        overflow: hidden;
+        img{
+            width: 100%;
+        }
       }
       left: 277px;
       top: 225px;

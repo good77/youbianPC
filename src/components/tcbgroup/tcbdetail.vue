@@ -267,6 +267,7 @@ export default {
       .abs-bottom {
         float: left;
         padding-top: 20px;
+        width: 100%;
         .ljjd {
           width: 200px;
           height: 40px;
@@ -284,13 +285,14 @@ export default {
           color: #ea910f;
         }
         .fxdd {
-          margin-left: 360px;
+          margin-right: 60px;
           width: 108px;
           height: 30px;
           border: 1px solid #ea910f;
           border-radius: 4px;
           background-color: #fff;
           color: #ea910f;
+          float: right;
         }
       }
     }

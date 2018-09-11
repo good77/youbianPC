@@ -3,8 +3,8 @@
         <div class="loginbox">
             <div class="loginmain">
                 <p class='login-text'>登录</p>
-                <input type="text" class='username' placeholder="用户名或手机号" v-model="phone">
-                <input type="password" class='pwd'  placeholder="密码" v-model="password">
+                <input type="text" class='username' placeholder="用户名或手机号" v-model="phone" @keyup="login">
+                <input type="password" class='pwd'  placeholder="密码" v-model="password"  @keyup="login">
                 <button class='login-btn' @click='login'>立即登录</button>
                 <router-link tag="p" to='/user/getlose' class='losepwd'>忘记密码</router-link>
                 <router-link tag="p" to="/user/register"  class='register'>还没有账号，去注册></router-link>
@@ -18,7 +18,8 @@ import qs from 'qs'
         data(){
             return {
                 phone:'15927908090',
-                password:'111'
+                password:'111',
+                timer:''
             }
         },
         methods:{

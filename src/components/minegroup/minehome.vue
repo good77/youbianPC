@@ -163,6 +163,7 @@
                     font-size:22px;
                 }
                 .pointbottom{
+                        font-size:16px;
                         height: 50px;
                         line-height: 50px;
                     .left{
@@ -180,6 +181,14 @@
                         text-align: center;
                         float: left;
                     }
+                }
+                .pointbottom .left:hover{
+                    cursor: pointer;
+                    opacity: .9;
+                }
+                .pointbottom .right:hover{
+                    cursor: pointer;
+                    opacity: .9;
                 }
             }
         }

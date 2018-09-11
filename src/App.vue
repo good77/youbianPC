@@ -3,7 +3,7 @@
     <router-view/>
     <div class="lianxikefu">
         <div class="kefu">
-          <i class='iconfont icon-kefu'></i>
+          <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=237370467&site=qq&menu=yes" class='qqlianxi' ><i class='iconfont icon-kefu'></i></a>
         </div>
         <div class="gotop">
           <i class='iconfont icon-top' @click='gotop'></i>
@@ -62,15 +62,20 @@ button:hover{
   border:1px solid #eaeaea;
   padding:4px;
   border-radius:3px;
+  z-index: 999
 }
-.kefu,.gotop{
+.qqlianxi,.gotop{
   width: 50px;
   height: 100px;
   line-height: 100px;
   text-align: center;
   color:#999;
 }
-.kefu:hover,.gotop:hover{
+.qqlianxi{
+  text-decoration: none;
+  display: inline-block;
+}
+.qqlianxi:hover,.gotop:hover{
   color:#dd5519;
   cursor: pointer;
 }

@@ -6,7 +6,7 @@
                 <input type="text" class='username' placeholder="请输入用户名" v-model="username">
                 <input type="text" class='telephone' placeholder="请输入手机号" v-model="phone">
                 <input type="password" class='pwd'  placeholder="请输入密码" v-model="password">
-                <input type="repassword" class='pwd'  placeholder="请确认密码" v-model="repassword">
+                <input type="password" class='pwd'  placeholder="请确认密码" v-model="repassword">
                 <input type="text" class='checkcode'  placeholder="请输入验证码" v-model="checkcode">
                 <button class='checkcode-btn' @click="getcode" :disabled="disabled">{{m}}</button>
                 <div class="agree">
@@ -30,35 +30,40 @@ import qs from 'qs'
                 repassword:'',
                 checkcode:'',
                 m:'获取验证码',
-                disabled:false
+                disabled:false,
+                timer:''
             }
         },
         methods:{
             getcode(){
-                 var m=60;
-                var timer = window.setInterval(()=>{
-                    if(m>1){
-                        m--;
-                        this.m=m+'秒后重试';
-                        console.log(this.m)
-                        this.disabled=true
-                    }else{
-                        this.m='获取验证码'
-                        this.disabled=false
+                if(this.phone){
+                    window.clearInterval(this.timer)
+                    var m=60;
+                    this.timer = window.setInterval(()=>{
+                        if(m>1){
+                            m--;
+                            this.m=m+'秒后重试';
+                            console.log(this.m)
+                            this.disabled=true
+                        }else{
+                            this.m='获取验证码'
+                            this.disabled=false
+                        }
+                    },1000)
+                    var data = {
+                        phone:this.phone
                     }
-                },1000)
-                var data = {
-                    phone:this.phone
-                }
-                this.$http.post(
-                    'http://www.youbian.link/api/v1/member/sendSms',
-                    data,
-                ).then(res=>{
-                   this.$message({
-                            message: res.data.message,
-                            type: 'warning'
+                    this.$http.post(
+                        'http://www.youbian.link/api/v1/member/sendSms',
+                        data,
+                    ).then(res=>{
+                    })
+                }else{
+                    this.$message({
+                        message: '手机号不能为空',
+                        type: 'warning'
                     });
-                })
+                }
              },
             register(){
                 var name=this.username;
@@ -77,14 +82,13 @@ import qs from 'qs'
                     'http://www.youbian.link/api/v1/member/register', 
                     qs.stringify(data), 
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-                )
-                
-                    .then(function (response) {
-                    console.log(response);
+                ).then(res=>{
+                    console.log(res);
+                        this.$message({
+                            message: res.data.message,
+                            type: 'warning'
+                        });
                     })
-                    .catch(function (error) {
-                    console.log(error);
-                    });
                 },
             }
     }

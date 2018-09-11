@@ -1,7 +1,7 @@
 <template>
 <div class="main">
         <div class="detail">
-        <p class='guide'>活动专区　>　<span class='vice-guide'>活动详情</span></p>
+        <p class='guide'><span @click='back' style='cursor:pointer'>活动专区</span>   　>　<span class='vice-guide'>活动详情</span></p>
         <div class="detailmain">
             <p class='title'>{{actMain.title_one}}</p>
             <div v-html='actMain.content'></div>
@@ -17,7 +17,9 @@
             }
         },
         methods: {
-         
+            back(){
+                this.$router.push('/act')
+            }
         },
         computed:{
             actMain:function(){

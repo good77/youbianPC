@@ -22,7 +22,7 @@
             var token = window.sessionStorage.getItem('token');
             if(!token){
                 this.$message({
-                    message: '您还没等登录',
+                    message: '您还没有登录',
                     type: 'warning'
                 });
                 this.$router.push('/user/login')

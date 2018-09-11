@@ -27,13 +27,20 @@
                     <el-input  placeholder="请输入视频连接" v-model="detail.video_url"></el-input>
                   </div>
                 </li>  
-                <li>
-                  附件
-                  <div class='iptbox'>
-                    <input type="file">
+               <li style="overflow:hidden;height:auto">
+                  <div style='float:left'>附件</div>
+                  <div class='iptbox' style="float:left">
+                    <el-upload
+                      action="http://www.youbian.link/api/v1/release/file"
+                      :on-success='success1'
+                      name='img'
+                      :limit="1"
+                      :file-list="fileList1">
+                      <el-button size="small" type="primary">点击上传</el-button>
+                    </el-upload>
                     <span class='jiami' :class='{isClock:isClock==1}' @click='jiami'><i class='el-icon-success'>文件加密</i></span>
                   </div>
-                </li>        
+                </li>         
             </ul>
         </div>
         <div class="info-basic">
@@ -93,6 +100,8 @@ export default {
       dialogImageUrl: '',
       dialogVisible: false,
       img:[],
+      file:'',
+      fileList1:[]
     };
   },
    computed:{
@@ -125,6 +134,12 @@ export default {
           var city_code = this.detail.city_code;
           var video_url =  this.detail.video_url;
           var describe = this.detail.describe;
+          var encryption = this.detail.encryption;
+          if(this.file.length>0){
+            var file = this.file
+          }else{
+            var file = this.detail.file
+          }
           if(this.img.length>0){
             var img = this.img.toString()
           }else{
@@ -177,6 +192,9 @@ export default {
     success(res, file, fileList){
         this.img.push(res.data)
         console.log(this.img)
+    },
+    success1(res, file, fileList){
+        this.file=res.data
     },
     changePrice(a){
       this.price=a;

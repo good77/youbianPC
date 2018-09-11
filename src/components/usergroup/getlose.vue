@@ -24,35 +24,41 @@ import qs from 'qs'
                 password_confirm:'',
                 code:'',
                 m:'获取验证码',
-                disabled:false
+                disabled:false,
+                timer:''
             }
         },
         methods:{
             getcode(){
-                var m=60;
-                var timer = window.setInterval(()=>{
-                    if(m>1){
-                        m--;
-                        this.m=m+'秒后重试';
-                        console.log(this.m)
-                        this.disabled=true
-                    }else{
-                        this.m='获取验证码'
-                        this.disabled=false
+                if(this.phone){
+                    window.clearInterval(this.timer)
+                    var m=60;
+                    this.timer = window.setInterval(()=>{
+                        if(m>1){
+                            m--;
+                            this.m=m+'秒后重试';
+                            console.log(this.m)
+                            this.disabled=true
+                        }else{
+                            this.m='获取验证码'
+                            this.disabled=false
+                        }
+                    },1000)
+                    var data = {
+                        phone:this.phone
                     }
-                },1000)
-                var data = {
-                    phone:this.phone
-                }
-                this.$http.post(
-                    'http://www.youbian.link/api/v1/member/sendSms',
-                    data,
-                ).then(res=>{
-                   this.$message({
-                            message: res.data.message,
+                    this.$http.post(
+                        'http://www.youbian.link/api/v1/member/sendSms',
+                        data,
+                    ).then(res=>{
+
+                    })
+                }else{
+                    this.$message({
+                            message: '手机号不能为空',
                             type: 'warning'
                     });
-                })
+                }
              },
             getlose(){
                 var phone= this.phone;

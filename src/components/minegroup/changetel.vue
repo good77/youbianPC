@@ -31,7 +31,8 @@ import qs from 'qs'
                 phone:'',
                 checkcode:'',
                 m:'获取验证码',
-                disabled:false
+                disabled:false,
+                timer:''
             }
         },
         computed:{
@@ -71,27 +72,35 @@ import qs from 'qs'
                 })
             },
             getcode(){
-                var m=60;
-                var timer = window.setInterval(()=>{
-                    if(m>1){
-                        m--;
-                        this.m=m+'秒后重试';
-                        console.log(this.m)
-                        this.disabled=true
-                    }else{
-                        this.m='获取验证码'
-                        this.disabled=false
+                if(this.phone){
+                     var m=60;
+                    window.clearInterval(this.timer)
+                    this.timer = window.setInterval(()=>{
+                        if(m>1){
+                            m--;
+                            this.m=m+'秒后重试';
+                            console.log(this.m)
+                            this.disabled=true
+                        }else{
+                            this.m='获取验证码'
+                            this.disabled=false
+                        }
+                    },1000)
+                    var data = {
+                        phone:this.phone
                     }
-                },1000)
-                var data = {
-                    phone:this.phone
+                    this.$http.post(
+                        'http://www.youbian.link/api/v1/member/sendSms',
+                        data,
+                    ).then(res=>{
+                        console.log(res)
+                    })
+                }else{
+                    this.$message({
+                        message: '手机号不能为空',
+                        type: 'warning'
+                    });
                 }
-                this.$http.post(
-                    'http://www.youbian.link/api/v1/member/sendSms',
-                    data,
-                ).then(res=>{
-                    console.log(res)
-                })
             }
         }
     }

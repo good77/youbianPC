@@ -172,7 +172,7 @@ export default {
           }
           li:hover{
             cursor: pointer;
-            color:#999;
+            color:#dd5519;
           }
         }
       }

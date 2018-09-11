@@ -1,7 +1,7 @@
 <template>
 <div class="main">
         <div class="detail">
-        <p class='guide'>交流分享　>　<span class='vice-guide'>{{list.title}}</span></p>
+        <p class='guide'> <span style="cursor:pointer" @click='gobottom'>交流分享</span> 　>　<span class='vice-guide'>{{list.title}}</span></p>
         <ul class="detailmain">
             <li v-for="(item,index,key) in list.list" :key=key>
                 <router-link :to="{path:'/newsmain',query:{id:item.id}}" tag='div' class='itembox'>
@@ -47,6 +47,20 @@
             var id = this.$route.query.id;
             this.$store.dispatch('getFooter2',id)
             window.scrollTo(0,0);  
+        },
+        methods:{
+              gobottom(){
+                var flag = 0;
+                var scrollToTop = window.setInterval(function() {
+                    var pos = window.pageYOffset;
+                    if (flag <100 ) {
+                        flag++;
+                        window.scrollTo( 0, pos + 50 ); // how far to scroll on each step
+                    } else {
+                        window.clearInterval( scrollToTop );
+                    }
+                }, 5);
+            },
         }
     }
 </script>

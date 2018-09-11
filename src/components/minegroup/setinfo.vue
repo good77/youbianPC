@@ -1,7 +1,7 @@
 <template>
     <div class="myinfo">
         <div class="title">
-            <p>账号管理>个人资料</p>
+            <p><span style='cursor:pointer'>个人资料</span>>修改信息</p>
         </div>
         <div class="main">
             <p class='main-title'>基本信息</p>
@@ -33,8 +33,8 @@
                         <li>
                             <img src="../../assets/pic/icon-sex.png" alt="" class='icon'>
                             性　　别： 
-                            <el-radio v-model="sex" label="1" >男</el-radio>
-                            <el-radio v-model="sex" label="2">女</el-radio>
+                            <el-radio v-model="userInfo.sex" label="男" checked>男</el-radio>
+                            <el-radio v-model="userInfo.sex" label="女" checked>女</el-radio>
                         </li>
                         <li>
                             <img src="../../assets/pic/icon-adress.png" alt="" class='icon'>
@@ -79,7 +79,7 @@ export default {
       province_code:'',
       city_code:'',
       area_code:'',
-      sex:'1',
+      sex:'',
       name:'',
       show: false,
 			params: {},
@@ -96,6 +96,11 @@ export default {
 	},
   methods:{
       setinfo(){
+        if(this.userInfo.sex=='男'){
+          this.sex=1
+        }else if(this.userInfo.sex=='女'){
+          this.sex=2
+        }
         var data={
           name:this.name,
           sex:this.sex,
@@ -109,7 +114,18 @@ export default {
           {headers: {
 		        token:Token.fetch()}}
         ).then(res=>{
-          console.log(res)
+          if(res.data.code==200){
+             this.$message({
+                message: res.data.message,
+                type: 'success'
+            });
+            this.$router.go(-1);
+          }else{
+             this.$message({
+                message: res.data.message,
+                type: 'warning'
+            });
+          }
         })
       },
       handleChange(value) {
@@ -162,6 +178,7 @@ export default {
       },
   },
   mounted(){
+    console.log(this.userInfo)
     this.$http({
       method:'get',
       url:'http://www.youbian.link/api/v1/user/user_edit',

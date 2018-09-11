@@ -1,7 +1,7 @@
 <template>
 <div class="main">
         <div class="detail">
-        <p class='guide'>{{detail.category}}　>　<span class='vice-guide'>{{detail.title}}</span></p>
+        <p class='guide'><span @click='gobottom' style="cursor:pointer">{{detail.category}}　</span>>　<span class='vice-guide'>{{detail.title}}</span></p>
         <div class="detailmain">
             <p class='title'>{{detail.title_one}}</p>
             <div v-html='detail.content'></div>
@@ -17,7 +17,23 @@
             }
         },
         methods: {
-         
+            gobottom(){
+                if(this.$route.query.title_id){
+                    var flag = 0;
+                    var scrollToTop = window.setInterval(function() {
+                        var pos = window.pageYOffset;
+                        if (flag <100 ) {
+                            flag++;
+                            window.scrollTo( 0, pos + 50 ); // how far to scroll on each step
+                        } else {
+                            window.clearInterval( scrollToTop );
+                        }
+                    }, 5);
+                }else if(this.$route.query.id){
+                    var id = this.$route.query.id
+                    this.$router.push({path:'/news',query:{id}})
+                }
+            },
         },
         computed:{
             detail:function(){
