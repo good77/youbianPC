@@ -73,9 +73,9 @@
         data(){
             return {
                 bangdan:{
-                    ri1:true,ri2:false,zhou1:false,zhou2:true,yue1:false,yue2:true
+                    ri2:true,ri1:false,zhou1:false,zhou2:true,yue2:false,yue1:true
                 },
-                type:'',
+                type:3,
             }
         },
         methods:{

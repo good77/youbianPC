@@ -15,7 +15,7 @@
                     <ul class="user-info">
                         <li>
                             <img src="../../assets/pic/icon-user.png" alt="" class='icon'>
-                            用 户 名 ：<span class='name'>111</span>
+                            用 户 名 ：<span class='name'>{{username}}</span>
                         </li>
                         <li>
                             <div class="shenfenzheng">
@@ -52,6 +52,7 @@ import Token from '../../store/token'
                 id_card:'',
                 id_front:'',
                 id_back:'',
+                username:window.sessionStorage.getItem('username')
             }
         },
         methods:{
@@ -166,16 +167,16 @@ import Token from '../../store/token'
                         }
                     }
                     .textbox{
-                        padding-left:60px;
+                        padding-left:24px;
                         font-weight: 600;
                         font-size:18px;
-                        line-height: 30px;
+                        line-height: 40px;
                         input{
                             height: 24px;
-                            width: 140px;
+                            width: 200px;
                             border-radius:4px;
                             border:1px solid #595959;
-                            text-indent: 12px;
+                            padding:4px 12px;
                         }
                     }
                 }

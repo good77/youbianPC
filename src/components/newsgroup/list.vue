@@ -28,11 +28,12 @@
         watch:{
             $route:function(){
                 var id = this.$route.query.id;
+                console.log(id)
                 var title_id = this.$route.query.title_id;
-                if(id){
+                if(id||id==0){
                     this.$store.dispatch('getFooter2',id)
                 }
-                if(title_id){
+                if(title_id||title_id==0){
                     this.$store.dispatch('getFooter1',title_id)
                 }
                 window.scrollTo(0,0);  

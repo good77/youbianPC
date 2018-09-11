@@ -28,10 +28,14 @@
                         周期：{{goodsDetail.cycle}}
                     </div>
                 </div>
-                <div class="abs-bottom">
+                <div class="abs-bottom" style='position:relative'>
                     <button class='ljjd' @click='getOrder'>立即接单</button>
                     <a target="_blank"  :href="goodsDetail.file" download="w3logo" class='xzfj' v-if='goodsDetail.file'><i class='el-icon-download'></i> 下载附件</a>
-                    <button class='fxdd'><i class='el-icon-share'></i>分享订单</button>
+                    <input type="text" v-model="message" style='display:none'>
+                    <button class='fxdd' 
+                      v-clipboard:copy="message"
+                      v-clipboard:success="onCopy"
+                      v-clipboard:error="onError"><i class='el-icon-share'></i>分享订单</button>
                 </div>
             </div>
             <div class="userbox">
@@ -122,7 +126,8 @@ import Token from '../../store/token'
 export default {
     data(){
         return{
-          id:this.$route.query.id
+          id:this.$route.query.id,
+          message:window.location.href
         }
     },
   computed:{
@@ -134,9 +139,23 @@ export default {
       $route:function(){
            var id = this.$route.query.id;
           this.$store.dispatch('getGoodsDetail',id);
+          this.message= window.location.href
+          window.scrollTo(0,0)
       }
   },
   methods: {
+     onCopy: function (e) {
+         this.$alert('复制成功，请将链接粘贴发送给好友!', {
+          confirmButtonText: '确定',
+          callback: action => {
+          
+          }
+        });
+      },
+      onError: function (e) {
+        console.log(e)
+        alert('Failed to copy texts')
+      },
     getOrder(){
       if(Token.fetch()){
          var data = {
@@ -276,6 +295,10 @@ export default {
           border-radius: 4px;
           background-color: #ea910f;
         }
+        .ljjd:hover{
+          cursor: pointer;
+          opacity: .9;
+        }
         .xzfj{
             color:#727272;
             text-decoration: none
@@ -293,6 +316,10 @@ export default {
           background-color: #fff;
           color: #ea910f;
           float: right;
+        }
+        .fxdd:hover{
+          color:#fff;
+          background-color: #ea910f;
         }
       }
     }
@@ -485,6 +512,10 @@ export default {
               color:#fff;
               text-align: center;
               line-height: 60px;
+          }
+          .item-bottom:hover{
+            cursor: pointer;
+            opacity: .9;
           }
         }
       }

@@ -27,6 +27,7 @@
                 });
                 this.$router.push('/user/login')
             }
+            window.scrollTo(0,0)
         }
     }
 </script>

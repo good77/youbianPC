@@ -21,6 +21,9 @@ Vue.component('ImgInputer', ImgInputer)
 /*swiper*/
 Vue.use(VueAwesomeSwiper)
 //
+import VueClipboard from 'vue-clipboard2'
+Vue.use(VueClipboard)
+//
 Vue.use(ElementUI)
 Vue.config.productionTip = false
 

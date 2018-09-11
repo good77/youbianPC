@@ -254,6 +254,9 @@
                         <div class="quick">
                             <div class="quicktitle">快速导航</div>
                             <ul class="itembox">
+                                 <li class="gongzhonghao">
+                                    <img src="../assets/pic/gongzhonghao.jpg" alt="">
+                                </li>
                                 <li v-for="(item,key) in quick" :key="key" v-if="item.sons.length>0">
                                     <p class='title_one'>{{item.name}}</p>
                                     <ul class='level_two'>
@@ -262,7 +265,9 @@
                                         </router-link>
                                     </ul>
                                 </li>
+                               
                             </ul>
+                            
                         </div>
                     </li>
                 </ul>
@@ -345,6 +350,7 @@ import cityList from 'china-city-data';
                 this.city = city.name
                 window.sessionStorage.setItem('cityname',city.name)
                 window.sessionStorage.setItem('citycode',city.id)
+                window.location.reload();
             },
             logout(){
                 sessionStorage.clear();
@@ -514,7 +520,7 @@ header{
                 .quick{
                     height: 300px;
                     width: 1200px;
-                    padding:10px 30px;
+                    padding:10px 0 30px;
                     box-sizing: border-box;
                     right:0;
                     background-color: #fff;
@@ -542,6 +548,13 @@ header{
                         display: flex;
                         flex-direction: column;
                         flex-wrap: wrap;
+                        .gongzhonghao{
+                            padding-top:20px;
+                            width: 200px;
+                            img{
+                                width: 100%;
+                            }
+                        }
                         li{
                             width: 200px;
                             text-align: left;
@@ -751,7 +764,7 @@ header{
 }
 /*tab*/
     .navbox{
-        height: 39px;
+        height: 38px;
         width: 100%;
         line-height: 39px;
         border-bottom:3px solid #ea910f;

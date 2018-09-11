@@ -110,6 +110,9 @@
             <div class="btn" @click='send'>
               确认发布
             </div>
+            <div class="btn" @click='goback'>
+              取消
+            </div>
         </div>
     </div>
 </template>
@@ -280,6 +283,9 @@ export default {
     changeCycle(a){
       this.cycle=a;
     },
+    goback(){
+      this.$router.go(-1)
+    }
   },
   mounted(){
     this.$store.dispatch('getAllCate');
@@ -366,9 +372,11 @@ export default {
     }
   }
   .btnbox{
+    overflow: hidden;
     width: 1200px;
     margin:auto;
     .btn{
+      float: left;
       height: 40px;
       line-height: 40px;
       text-align: center;
@@ -378,6 +386,10 @@ export default {
       margin-left:30px;
       margin-bottom:30px;
       background-color: #ea910f;
+    }
+    .btn:hover{
+      cursor: pointer;
+      opacity: .9;
     }
   }
 }

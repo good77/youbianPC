@@ -367,7 +367,7 @@ import Token from '../../store/token'
         .srh-btn{
             font-size:16px;
             width: 131px;
-            height: 38px;
+            height: 34px;
             line-height: 34px;
             border:0;
             background-color: #ea910f;

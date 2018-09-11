@@ -9,12 +9,11 @@
             <li @click='getList(2,$event)' :class="{active:isActive==2}">已结束</li>
         </ul>
         <ul class="actlist">
-            <li class='actitem' v-for='(item,index) in actList.data'>
+            <li class='actitem' v-for='(item,index,key) in actList.data' :key="key">
                 <div class="itemmain"  v-if='item.is_img==0'>
                     <p class="title">{{item.title_one}}</p>
                     <p class="vicetitle">{{item.title_two}}</p>
                     <p class="content">{{item.title_three}}</p>
-                    <img src="../../assets/pic/act-img.png" alt="" class='act-img'>
                 </div>
                 <div class="itemmain-else" v-if='item.is_img==1'>
                     <img :src="item.img" alt="">

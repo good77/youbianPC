@@ -6,19 +6,18 @@
                     <div class="iptbox">
                         <span class='ipt-text'>分类</span>
                         <el-cascader
-                                    v-model="type"
+                                v-model="type"
                                 @change="handleChange"
-                                    placeholder="请选择分类"
-                                    :options="options"
-                                    filterable
-                                    change-on-select>
-                            </el-cascader>
+                                placeholder="请选择分类"
+                                :options="options"
+                                filterable
+                                change-on-select>
+                        </el-cascader>
                     </div>
                     <div class="iptbox">
                             <span class='ipt-text'>日期</span>
                             <el-select v-model="date" placeholder="请选择"  @change='changeDate'>
                                 <el-option
-                            
                                 v-for="item in option_date"
                                 :key="item.value"
                                 :label="item.label"
@@ -63,12 +62,16 @@
             </div>
        
         </div>
-        <ul class="sort">
+        <ul class="sort"  v-if="goodsList.length>0">
             <li :class='{isActive:sort==0}' @click='getsort(0)'>综合↑</li>
             <li :class='{isActive:sort==1}' @click='getsort(1)'>价格↑</li>
             <li :class='{isActive:sort==2}' @click='getsort(2)'>完成时间↑</li>
             <li :class='{isActive:sort==3}' @click='getsort(3)'>发布数量↑</li>
         </ul>
+        <div class="nogoods" v-if="goodsList.length<1">
+            <p>没有找到您想要的订单！~</p>
+            <img src="../../assets/pic/nogoods.png" alt="">
+        </div>
         <ul class="goodslist">
             <li v-for='(item,key) in goodsList' :key=key>
                 <div class="item-left">
@@ -103,7 +106,7 @@
                 </div>
             </li>
         </ul>
-        <div class="pagerbox">
+        <div class="pagerbox"  v-if="goodsList.length>0">
             <div class="pager">
                 <el-pagination
                 background
@@ -129,6 +132,7 @@
                 level_two:this.$route.query.level_two,
                 level_three:this.$route.query.level_three,
                 type:[this.$route.query.level_one,this.$route.query.level_two,this.$route.query.level_three],
+                citycode:window.sessionStorage.getItem('citycode'),
                 option_date: [
                     {
                     value: "0",
@@ -158,7 +162,7 @@
                 option_state: [
                     {
                     value: "0",
-                    label: "全部"
+                    label: "不限"
                     },
                     {
                     value: "1",
@@ -227,6 +231,46 @@
                 ]
             }
         },
+        watch:{
+            $route:function(){
+                if(this.$route.query.level_one==10){
+                    if(!this.$route.query.level_two){
+                    this.type=[10,'',''];
+                    var order_type = this.state;
+                    var time = this.date;
+                    this.level_one = this.type[0];
+                    this.level_two = this.type[1];
+                    this.level_three = this.type[2];
+                    var level_one = this.type[0];
+                    var level_two = this.type[1];
+                    var level_three = this.type[2];
+                    var price = this.price;
+                    var type = this.order;
+                    var city_code = this.citycode
+                    var data={
+                        level_one,
+                        level_three,
+                        level_two,
+                        time,
+                        price,
+                        type,
+                        order_type,
+                        city_code
+                    }
+                    this.$http.post(
+                        'http://www.youbian.link/api/v1/index/same_city',
+                        data
+                    ).then(res=>{
+                        console.log(res)
+                        if(res.data.code==200){
+                        var data = res.data.data.order_list.data;
+                        this.$store.dispatch('srhGoods',data)
+                        }
+                    })
+                    }
+                }
+            }
+        },
         methods: {
            getsort(num){
                this.sort=num;
@@ -255,14 +299,28 @@
                     var level_two = this.level_two;
                     var level_three = this.level_three;
                     var price = this.price;
-                    var data={
-                        level_one,
-                        level_three,
-                        level_two,
-                        time,
-                        price,
-                        type,
-                        order_type
+                    if(this.level_one==10){
+                        var city_code = this.citycode
+                         var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            time,
+                            price,
+                            type,
+                            order_type,
+                            city_code
+                        }
+                    }else{
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            time,
+                            price,
+                            type,
+                            order_type
+                        }
                     }
                     this.$http.post(
                         'http://www.youbian.link/api/v1/index/same_city',
@@ -279,39 +337,66 @@
             },
             changeDate(value){
                 if(value==0){
-                this.time= value;
-                var type = this.order;
-                var order_type = this.state;
-                var level_one = this.level_one;
-                var level_two = this.level_two;
-                var level_three = this.level_three;
-                var price = this.price;
-                var data={
-                    level_one,
-                    level_three,
-                    level_two,
-                    price,
-                    type,
-                    order_type
-                }
+                    this.time= value;
+                    var type = this.order;
+                    var order_type = this.state;
+                    var level_one = this.level_one;
+                    var level_two = this.level_two;
+                    var level_three = this.level_three;
+                    var price = this.price;
+                    if(level_one==10){
+                        var city_code =this.citycode
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            price,
+                            type,
+                            order_type,
+                            city_code
+                        }
+                    }else{
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            price,
+                            type,
+                            order_type
+                        }
+                    }
                 }else{
-                this.time = value;
-                var time = this.time
-                var type = this.order;
-                var order_type = this.state;
-                var level_one = this.level_one;
-                var level_two = this.level_two;
-                var level_three = this.level_three;
-                var price = this.price;
-                var data={
-                    level_one,
-                    level_three,
-                    level_two,
-                    time,
-                    price,
-                    type,
-                    order_type
-                }
+                    this.time = value;
+                    var time = this.time
+                    var type = this.order;
+                    var order_type = this.state;
+                    var level_one = this.level_one;
+                    var level_two = this.level_two;
+                    var level_three = this.level_three;
+                    var price = this.price;
+                    if(level_one==10){
+                        var city_code = this.citycode;
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            time,
+                            price,
+                            type,
+                            order_type,
+                            city_code
+                        }
+                    }else{
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            time,
+                            price,
+                            type,
+                            order_type
+                        }
+                    }    
                 }
                 this.$http.post(
                     'http://www.youbian.link/api/v1/index/same_city',
@@ -333,32 +418,59 @@
                 var level_one = this.level_one;
                 var level_two = this.level_two;
                 var level_three = this.level_three;
-                var data={
-                    time,
-                    level_one,
-                    level_three,
-                    level_two,
-                    type,
-                    order_type
+                if(level_one==10){
+                    var city_code = this.citycode;
+                    var data={
+                        time,
+                        level_one,
+                        level_three,
+                        level_two,
+                        type,
+                        order_type,
+                        city_code
+                    }
+                }else{
+                    var data={
+                        time,
+                        level_one,
+                        level_three,
+                        level_two,
+                        type,
+                        order_type
+                    }
                 }
                 }else{
-                this.price = value;
-                var time = this.time
-                var type = this.order;
-                var order_type = this.state;
-                var level_one = this.level_one;
-                var level_two = this.level_two;
-                var level_three = this.level_three;
-                var price = this.price;
-                var data={
-                    level_one,
-                    level_three,
-                    level_two,
-                    time,
-                    price,
-                    type,
-                    order_type
-                }
+                    this.price = value;
+                    var time = this.time
+                    var type = this.order;
+                    var order_type = this.state;
+                    var level_one = this.level_one;
+                    var level_two = this.level_two;
+                    var level_three = this.level_three;
+                    var price = this.price;
+                    if(city_code==10){
+                        var city_code = this.citycode
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            time,
+                            price,
+                            type,
+                            order_type,
+                            city_code
+                        }
+                    }else{
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            time,
+                            price,
+                            type,
+                            order_type
+                        }
+                    }
                 }
                 this.$http.post(
                     'http://www.youbian.link/api/v1/index/same_city',
@@ -381,13 +493,26 @@
                 var level_two = this.level_two;
                 var level_three = this.level_three;
                 var price = this.price;
-                var data={
-                    time,
-                    level_one,
-                    level_three,
-                    level_two,
-                    type,
-                    price
+                if(level_one==10){
+                    var city_code = this.citycode
+                    var data={
+                        time,
+                        level_one,
+                        level_three,
+                        level_two,
+                        type,
+                        price,
+                        city_code
+                    }
+                }else{
+                    var data={
+                        time,
+                        level_one,
+                        level_three,
+                        level_two,
+                        type,
+                        price
+                    }
                 }
                 }else{
                 this.state = value;
@@ -398,15 +523,30 @@
                 var level_two = this.level_two;
                 var level_three = this.level_three;
                 var price = this.price;
-                var data={
-                    level_one,
-                    level_three,
-                    level_two,
-                    time,
-                    price,
-                    type,
-                    order_type
+                if(level_one==10){
+                    var city_code =this.citycode;
+                    var data={
+                        level_one,
+                        level_three,
+                        level_two,
+                        time,
+                        price,
+                        type,
+                        order_type,
+                        city_code
+                    }
+                }else{
+                    var data={
+                        level_one,
+                        level_three,
+                        level_two,
+                        time,
+                        price,
+                        type,
+                        order_type
+                    }
                 }
+               
                 }
                 this.$http.post(
                     'http://www.youbian.link/api/v1/index/same_city',
@@ -429,32 +569,58 @@
                 var level_two = this.level_two;
                 var level_three = this.level_three;
                 var price = this.price;
-                var data={
-                    time,
-                    level_one,
-                    level_three,
-                    level_two,
-                    price,
-                    order_type
-                }
+                if(level_one==10){
+                    var city_code = this.citycode;
+                    var data={
+                        time,
+                        level_one,
+                        level_three,
+                        level_two,
+                        price,
+                        order_type
+                    }
                 }else{
-                this.order = value;
-                var time = this.time
-                var type = this.order;
-                var order_type = this.state;
-                var level_one = this.level_one;
-                var level_two = this.level_two;
-                var level_three = this.level_three;
-                var price = this.price;
-                var data={
-                    level_one,
-                    level_three,
-                    level_two,
-                    time,
-                    price,
-                    type,
-                    order_type
+                    var data={
+                        time,
+                        level_one,
+                        level_three,
+                        level_two,
+                        price,
+                        order_type
+                    }
                 }
+
+                }else{
+                    this.order = value;
+                    var time = this.time
+                    var type = this.order;
+                    var order_type = this.state;
+                    var level_one = this.level_one;
+                    var level_two = this.level_two;
+                    var level_three = this.level_three;
+                    var price = this.price;
+                    if(level_one==10){
+                        var city_code = this.citycode;
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            time,
+                            price,
+                            type,
+                            order_type
+                        }
+                    }else{
+                        var data={
+                            level_one,
+                            level_three,
+                            level_two,
+                            time,
+                            price,
+                            type,
+                            order_type
+                        }
+                    }
                 }
                 this.$http.post(
                     'http://www.youbian.link/api/v1/index/same_city',
@@ -482,11 +648,21 @@
         mounted(){
             console.log(this.type)
             this.$store.dispatch('getAllCate');
-            var data ={
-                level_one:this.level_one,
-                level_two:this.level_two,
-                level_three:this.level_three,
-                order_status:this.sort
+            if(this.level_one==10){
+                var data ={
+                    level_one:this.level_one,
+                    level_two:this.level_two,
+                    level_three:this.level_three,
+                    order_status:this.sort,
+                    city_code:this.citycode
+                }
+            }else{
+                var data ={
+                    level_one:this.level_one,
+                    level_two:this.level_two,
+                    level_three:this.level_three,
+                    order_status:this.sort
+                }
             }
             this.$store.dispatch('getGoodsList',data)
         }
@@ -623,6 +799,25 @@
     li:hover{
         cursor: pointer;
         color:#dd5519;
+    }
+}
+.nogoods{
+    position: relative;
+    border-top:20px solid #eff3f5;
+    width: 600px;
+    margin:auto;
+    background-color: #fff;
+    padding:0  300px 100px;
+    img{
+        width:100%;
+    }
+    p{
+        width: 600px;
+        font-size:40px;
+        top:40px;
+        color:#999;
+        position: absolute;
+        text-align: center;
     }
 }
 .goodslist{

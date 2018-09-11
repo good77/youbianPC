@@ -75,6 +75,9 @@
             <div class="btn" @click='send'>
               确认修改
             </div>
+            <router-link tah='div' to="/mine/yfbd" class="btn">
+              取消
+            </router-link>
         </div>
     </div>
 </template>
@@ -306,9 +309,11 @@ export default {
     }
   }
   .btnbox{
+     overflow: hidden;
     width: 1200px;
     margin:auto;
     .btn{
+      float: left;
       height: 40px;
       line-height: 40px;
       text-align: center;
@@ -318,6 +323,10 @@ export default {
       margin-left:30px;
       margin-bottom:30px;
       background-color: #ea910f;
+    }
+    .btn:hover{
+      opacity: .9;
+      cursor: pointer;
     }
   }
 }
