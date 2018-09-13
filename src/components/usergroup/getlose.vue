@@ -75,14 +75,21 @@ import qs from 'qs'
                     'http://www.youbian.link/api/v1/member/retrieve_password', 
                     qs.stringify(data), 
                     {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-                )
-                
-                    .then(function (response) {
-                    console.log(response);
-                    })
-                    .catch(function (error) {
-                    console.log(error);
-                    });
+                ).then(res=>{
+                    console.log(res)
+                    if(res.data.code==200){
+                          this.$message({
+                                message: res.data.message,
+                                type: 'success'
+                            });
+                            this.$router.push('/user/login')
+                    }else{
+                          this.$message({
+                                message: res.data.message,
+                                type: 'warning'
+                            });
+                    }
+                })
             }
         }
     }

@@ -25,7 +25,7 @@
                     </div>
                 </li>
             </ul>
-            <button class="topay" @click="pay">确认支付<span>{{points}}</span>积分</button>
+            <button class="topay" @click="open">确认支付<span>{{points}}</span>积分</button>
         </div>
     </div>
 </template>
@@ -61,6 +61,12 @@ import Token from '../../store/token'
             })
         },
         methods:{
+              open() {
+                this.$alert('请问您是否要进行充值', '会员充值', {
+                confirmButtonText: '确定',
+                callback: this.pay
+                });
+            },
             pay(){
                 var now_price = this.points;
                 var member_time = this.member_time;
@@ -74,7 +80,10 @@ import Token from '../../store/token'
                     {headers:{token:Token.fetch()}}
                 ).then(res=>{
                     if(res.data.code==400){
-
+                        this.$message({
+                                message: res.data.message,
+                                type: 'warning'
+                            });
                     }else{
                          this.$message({
                                 message: '续费成功',

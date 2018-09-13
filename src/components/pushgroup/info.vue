@@ -6,7 +6,7 @@
                <li>
                   <span class='xinghao'>*</span>标题
                   <div class='iptbox1'>
-                    <el-input  placeholder="请输入标题（简单描述服务）" v-model="title"  @change="changeTitle"></el-input>
+                    <el-input  placeholder="请输入标题（简单描述服务，20字以内）" v-model="title"  @change="changeTitle" ></el-input>
                   </div>
                 </li>
                <li>
@@ -107,7 +107,7 @@
             </div>
         </div>
         <div class="btnbox">
-            <div class="btn" @click='send'>
+            <div class="btn" @click='open'>
               确认发布
             </div>
             <div class="btn" @click='goback'>
@@ -141,15 +141,32 @@ export default {
       dialogVisible: false,
       img:[],
       file:'',
-      fileList1:[]
+      fileList1:[],
     };
   },
    computed:{
       options:function(){
       return this.$store.state.allCate
+    },
+    sum:function(){
+      return this.price*this.number
     }
    },
   methods: {
+    open(){
+      this.$confirm('您是否确定发布订单并扣除?'+this.sum+'积分', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+              this.send();          
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '发布已取消'
+          });          
+        });
+    },
     handleRemove(file, fileList) {
         console.log(file, fileList);
     },
@@ -278,6 +295,12 @@ export default {
       this.number=a;
     },
     changeTitle(a){
+      if(a.length>20){
+        var a = a.substring(0,20);
+        this.title = a;
+      }else{
+        this.title = a;
+      }
       this.title=a;
     },
     changeCycle(a){

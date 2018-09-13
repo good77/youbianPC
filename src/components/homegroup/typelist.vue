@@ -139,16 +139,18 @@
         .type-text{
             padding-top:10px;
             font-size:16px;
-            height: 100px;
+            height: 65px;
+            overflow: hidden;
             background-color: #fff;
             flex-wrap: wrap;
-            padding:0 20px;
+            padding:0 0 0 20px;
             li{
                 float: left;
                 width: auto;
                 text-align: center;
                 height: 30px;
                 line-height: 30px;
+                margin-left:3px;
             }
             li:hover{
                 cursor: pointer;

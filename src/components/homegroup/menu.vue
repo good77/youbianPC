@@ -165,14 +165,20 @@ export default {
             padding: 0;
             float: left;
             text-align: center;
-            width: 120px;
+            width: 90px;
+            margin:0 15px;
             color: #656565;
             line-height: 34px;
             height: 34px;
+            span{
+              transition: all 1s;
+              border-bottom: 3px solid #fff;
+            }
           }
-          li:hover{
+          li:hover span{
             cursor: pointer;
             color:#dd5519;
+            border-bottom:3px solid #dd5519;
           }
         }
       }

@@ -2,25 +2,31 @@
     <div class="rank">
         <div class="rankbg" style='position:relative'>
             <img src="../../assets/pic/rankbg.png" alt="" style='postion:absolute'>
-            <div class="user-first user" v-if="rank.length>0">
-                <div class="circle">
-                    <img :src="rank[0].get_user.img" alt="" v-if="rank[0].get_user.img">
-                     <img src="../../assets/default.jpg" alt="" v-else="rank[0].get_user.img">
+            <div class="user-first user">
+                 <div class="circle " v-if="rank[0].get_user.img">
+                     <img :src="rank[0].get_user.img" alt="">
+                </div>
+                <div class="circle " v-if="!rank[0].get_user.img">
+                     <img src="../../assets/default.jpg" alt="">
                 </div>
                 <p>{{rank[0].get_user.name}}</p>
                 <p>发布数量 : {{rank[0].sum}}</p>
             </div>
-            <div class="user-second user" v-if="rank.length>1">
-                <div class="circle">
-                     <img :src="rank[1].get_user.img" alt="" v-if="rank[1].get_user.img">
-                     <img src="../../assets/default.jpg" alt="" v-else="rank[1].get_user.img">
+            <div class="user-second user">
+                <div class="circle " v-if="rank[1].get_user.img">
+                     <img :src="rank[1].get_user.img" alt="">
+                </div>
+                <div class="circle " v-if="!rank[1].get_user.img">
+                     <img src="../../assets/default.jpg" alt="">
                 </div>
                 <p>{{rank[1].get_user.name}}</p>
             </div>
-            <div class="user-third user" v-if="rank.length>2">
-                <div class="circle">
-                     <img :src="rank[2].get_user.img" alt="" v-if="rank[2].get_user.img">
-                     <img src="../../assets/default.jpg" alt="" v-else="rank[2].get_user.img">
+            <div class="user-third user">
+                <div class="circle " v-if="rank[2].get_user.img">
+                     <img :src="rank[2].get_user.img" alt="">
+                </div>
+                <div class="circle " v-if="!rank[2].get_user.img">
+                     <img src="../../assets/default.jpg" alt="">
                 </div>
                 <p>{{rank[2].get_user.name}}</p>
             </div>
@@ -56,6 +62,7 @@
                     <td class='ranknum' v-if="index==0"><img src="../../assets/pic/rank-first.png" alt="" class='icon-rank'></td>
                     <td class='ranknum' v-if="index==1"><img src="../../assets/pic/rank-second.png" alt="" class='icon-rank'></td>
                     <td class='ranknum' v-if="index==2"><img src="../../assets/pic/rank-third.png" alt="" class='icon-rank'></td>
+                    <td class='ranknum' v-if="index>2">{{index+1}}</td>
                     <td class='rankorder'>{{item.sum}}</td>
                     <td class='rankuser'>{{item.get_user.name}}</td>
                 </tr>
@@ -166,6 +173,10 @@
         border-radius: 50%;
         background-color: #000;
         margin-bottom: 30px;
+        overflow: hidden;
+        img{
+            width:100%;
+        }
       }
       left: 767px;
       top: 215px;

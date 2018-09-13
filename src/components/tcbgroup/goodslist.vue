@@ -73,7 +73,7 @@
             <img src="../../assets/pic/nogoods.png" alt="">
         </div>
         <ul class="goodslist">
-            <li v-for='(item,key) in goodsList' :key=key>
+            <li v-for='(item,index,key) in goodsList' v-if="index>=((pagenum-1)*10)&&index<(pagenum*10)"  :key=key>
                 <div class="item-left">
                     <div class="title">
                         <router-link tag='span' :to='{path:"/tcbmain",query:{id:item.id}}' class='getdetail'>{{item.title}}</router-link>
@@ -85,6 +85,7 @@
                         </span>
                     </div>
                     <div class="type-date">
+                        <p style='text-overflow:ellipsis;width:300px;overflow:hidden;white-space:nowrap;font-size:12px;'>{{item.describe}}</p>
                         <span class='type'><img src="../../assets/pic/icon-type.png" alt="" class='icon-type'>{{item.get_one.name}}-{{item.get_two.name}}-{{item.get_three.name}}</span>
                         <span class='date'><img src="../../assets/pic/icon-date.png" alt="" class='icon-date'>{{item.update_time}}</span>
                     </div>
@@ -111,8 +112,11 @@
                 <el-pagination
                 background
                 layout="prev, pager, next"
-                :total=total
+                :total="goodsList.length"
                 class='pager'
+                @prev-click="prev"
+                @next-click="next"
+                @current-change="current"
                 >
             </el-pagination>
             </div>
@@ -123,6 +127,7 @@
     export default{
         data(){
             return {
+                pagenum:1,
                 sort:0,
                 date:'0',
                 price:'0',
@@ -272,6 +277,15 @@
             }
         },
         methods: {
+            prev(num){
+                this.pagenum=num
+            },
+            next(num){
+                this.pagenum=num
+            },
+            current(num){
+                this.pagenum=num
+            },
            getsort(num){
                this.sort=num;
                     var data ={
@@ -656,6 +670,9 @@
                     order_status:this.sort,
                     city_code:this.citycode
                 }
+                this.$store.dispatch('getGoodsList',data)
+            }else if(!this.level_one){
+                
             }else{
                 var data ={
                     level_one:this.level_one,
@@ -663,8 +680,8 @@
                     level_three:this.level_three,
                     order_status:this.sort
                 }
+                this.$store.dispatch('getGoodsList',data)
             }
-            this.$store.dispatch('getGoodsList',data)
         }
     }
 </script>
@@ -791,9 +808,10 @@
     justify-content: flex-start;
     border-bottom:1px solid #eff3f5;
     li{
+        width: 100px;
         height: 50px;
         line-height: 50px;
-        margin:0 8px;
+        margin:0 50px;
         text-align: center;
     }
     li:hover{

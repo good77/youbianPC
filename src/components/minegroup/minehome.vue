@@ -8,6 +8,7 @@
                 <div class="ziliao">
                     <p>用户名：<span>{{userCenter.name}}</span></p>
                     <p v-if="userCenter.grade_status==1"><i class='iconfont icon-VIP size-18 '></i>{{userCenter.members_end}}<router-link to="/mine/vipup" tag='span' class='quxufei'>去续费</router-link></p>
+                    <p v-if="userCenter.grade_status==0">普通会员&nbsp<router-link to="/mine/vipup" tag='span' class='quxufei'>去升级</router-link></p>
                     <p class='jiedan'>我的接单：<span class='color-dd5519'>{{userCenter.receive_num1}}</span></p>
                     <p class='fadan'>我的发单：<span class='color-3d7f4f'>{{userCenter.release_num1}}</span></p>
                 </div>
@@ -29,7 +30,7 @@
                 <li class='title'>
                     <span class='use'>来源/用途</span><span class='change'>积分变化</span><span class='time'>时间</span><span class='remark'>备注</span>
                 </li>
-                <li v-for='(item,index,key) in userCenter.integral_detail' :key=key :class="{'color-f00':item.status==2,'color-dd5519':item.status==1,'color-3d7f4f':item.status==0}" v-if="index<(now*7)&&index>=((now-1)*7)">
+                <li v-for='(item,index,key) in userCenter.integral_detail' :key=key :class="{'color-f00':item.status==2,'color-dd5519':item.status==1||item.status==3||item.status==5||item.status==6,'color-3d7f4f':item.status==0||item.status==4}" v-if="index<(now*7)&&index>=((now-1)*7)">
                     <span class='use' v-if="item.status==0">
                         充值
                     </span>
@@ -39,10 +40,22 @@
                     <span class='use' v-if="item.status==2">
                         奖励
                     </span>
-                    <span class='change' v-if="item.status==0||item.status==2">
+                    <span class='use' v-if="item.status==3">
+                        发布订单
+                    </span>
+                    <span class='use' v-if="item.status==4">
+                        完成订单
+                    </span>
+                    <span class='use' v-if="item.status==5">
+                        开通会员
+                    </span>
+                    <span class='use' v-if="item.status==6">
+                        会员续费
+                    </span>
+                    <span class='change' v-if="item.status==0||item.status==2||item.status==4">
                         {{'+'+item.recharge}}
                     </span>
-                    <span class='change' v-if="item.status==1">
+                    <span class='change' v-if="item.status==1||item.status==3||item.status==5||item.status==6">
                         {{'-'+item.recharge}}
                     </span>
                     <span class='time'>
@@ -139,6 +152,9 @@
                     font-size:14px;
                     color:#ea910f;
                 }
+                .quxufei:hover{ 
+                    cursor: pointer;
+                }
                 .jiedan,.fadan{
                     line-height: 28px;
                     font-weight: 600;
@@ -151,15 +167,18 @@
             margin-left:110px;
             margin-top:30px;
             .point{
+                overflow: hidden;
                 text-align: center;
                 width: 530px;
                 height: 100px;
                 border-radius:4px;
-                border:1px solid #ea910f;
+                border:1px solid #666;
                 .pointtop{
+                    border-bottom: 1px solid #666;
                     line-height: 50px;
                     height: 50px;
-                    color:#ea910f;
+                    color:#333;
+                    background-color: #fff;
                     font-size:22px;
                 }
                 .pointbottom{
@@ -168,18 +187,26 @@
                         line-height: 50px;
                     .left{
                         text-align: center;
-                        width: 264px;
-                        border-right:1px solid #ea910f;
+                        width: 265px;
                         float: left;
-                        background-color: #ea910f;
-                        color:#fff;
+                        background-color: #eaeaea;
+                        color:#333;
+                        border-right:1px solid #666;
                     }
                     .right{
-                        color:#fff;
-                        background-color: #ccc;
-                        width: 265px;
+                        color:#333;
+                        background-color: #eaeaea;
+                        width: 264px;
                         text-align: center;
                         float: left;
+                    }
+                    .left:hover{
+                        color:#fff;
+                        background-color: #ea910f;
+                    }
+                    .right:hover{
+                        color:#fff;
+                        background-color: #ea910f;
                     }
                 }
                 .pointbottom .left:hover{

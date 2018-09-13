@@ -224,12 +224,14 @@
                 </span>
                 <div class="sinabox">
                     <img src="../assets/pic/sina.png" alt="">
+                    <p>扫一扫，关注优便新浪微博</p>
                 </div>
                 <span class='wechat'>
                     <i class='iconfont icon-wechat'></i>
                 </span>
                 <div class="wechatbox">
                     <img src="../assets/pic/wechat.jpg" alt="">
+                    <p>扫一扫，关注优便公众号</p>
                 </div>
             </div>
             <div class="top-right">
@@ -288,9 +290,9 @@
                 <input type="text" class='ipt' placeholder="请输入您想要搜索的关键字" v-model='srhtext' @keyup.enter="srh">
                 <button class='btn' @click='srh'>搜索</button>
                 <div class="wordlist">
-                    <span>同城便</span>
-                    <span>同城便</span>
-                    <span>同城便</span>
+                    <span @click="gosrh('dog')">dog</span>
+                    <span @click="gosrh('url')">url</span>
+                    <span @click="gosrh('999888')">999888</span>
                 </div>
             </div>
             <router-link tag='div' :to="{path:'/push/info'}" class="sent-info">
@@ -330,6 +332,10 @@ import cityList from 'china-city-data';
             },
         },
         methods:{
+            gosrh(str){
+                this.srhtext = str;
+                this.srh();
+            },
             gobottom(){
                 var flag = 0;
                 var scrollToTop = window.setInterval(function() {
@@ -368,6 +374,9 @@ import cityList from 'china-city-data';
                     if(res.data.code==200){
                         this.$store.dispatch('srhGoods',res.data.data)
                         this.$router.push('/tcb')
+                    }else{
+                        this.$router.push('/tcb')
+                        this.$store.dispatch('srhGoods','')
                     }
                 })
             },
@@ -444,22 +453,26 @@ header{
     position:absolute;
     top:30px;
     background-color: #fff;
-    width: 100px;
-    height: 100px;
+    width: 150px;
     padding:10px;
     border-radius:4px;
     border:1px solid #eaeaea;
     z-index: 9999;
     display: none;
+    p{
+        font-size:12px;
+        color:#666;
+        text-align: center;
+    }
     img{
         width: 100%;
     }
 }
 .sinabox{
-    left:-55px;
+    left:-75px;
 }
 .wechatbox{
-    left:-30px;
+    left:-50px;
 }
 #top{
     line-height: 34px;
@@ -706,7 +719,9 @@ header{
                 position:absolute;
                 top:40px;
                 font-size:12px;
-                color:#ababab;
+                cursor: pointer;
+                margin-left:5px;
+                color:#dd5519;
             }
             .icon-srh{
                 margin-top:8px;

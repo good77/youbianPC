@@ -32,7 +32,7 @@
                     <button class='ljjd' @click='getOrder'>立即接单</button>
                     <a target="_blank"  :href="goodsDetail.file" download="w3logo" class='xzfj' v-if='goodsDetail.file'><i class='el-icon-download'></i> 下载附件</a>
                     <input type="text" v-model="message" style='display:none'>
-                    <button class='fxdd' 
+                    <button class='fxdd'
                       v-clipboard:copy="message"
                       v-clipboard:success="onCopy"
                       v-clipboard:error="onError"><i class='el-icon-share'></i>分享订单</button>
@@ -59,9 +59,7 @@
             <div class="info">
                 <div class="info-main">
                     <p class='xxxx'>详细信息</p>
-                    <video :src="goodsDetail.url" v-if="goodsDetail.url" controls="controls" class='videobox'>
-                        您的浏览器不支持 video 标签。
-                    </video>
+                    <embed :src="goodsDetail.video_url" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
                     <div v-html='goodsDetail.describe'></div>
                     <ul style='margin-top:20px;'>
                         <li v-for="(item,key) in goodsDetail.img" :key=key>

@@ -56,6 +56,7 @@
                     <td class='ranknum' v-if="index==0"><img src="../../assets/pic/rank-first.png" alt="" class='icon-rank'></td>
                     <td class='ranknum' v-if="index==1"><img src="../../assets/pic/rank-second.png" alt="" class='icon-rank'></td>
                     <td class='ranknum' v-if="index==2"><img src="../../assets/pic/rank-third.png" alt="" class='icon-rank'></td>
+                    <td class='ranknum' v-if="index>2">{{index+1}}</td>
                     <td class='rankorder'>{{item.sum}}</td>
                     <td class='rankuser'>{{item.get_user.name}}</td>
                 </tr>
@@ -165,11 +166,15 @@
     }
     .user-third {
       .circle {
+        overflow: hidden;
         width: 162px;
         height: 162px;
         border-radius: 50%;
         background-color: #000;
         margin-bottom: 30px;
+        img{
+            width:100%;
+        }
       }
       left: 767px;
       top: 215px;

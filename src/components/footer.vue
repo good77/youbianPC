@@ -78,15 +78,17 @@
                         <ul>
                             <router-link :to="{path:'/newsmain',query:{title_id:8}}" tag='li'>了解优便</router-link>
                             <router-link :to="{path:'/newsmain',query:{title_id:9}}" tag='li'>加入优便</router-link>
-                            <li style='position:relative' class='sina'>
-                                新浪微博
-                                <div class="sinabox">
-                                    <img src="../assets/pic/sina.png" alt="">
-                                </div>
+                            <li class='sina'>
+                                <a href="https://weibo.com/u/6635640782?refer_flag=1001030201_&is_hot=1" target="_blank">新浪微博</a>
                             <li style='position:relative'  class='wechat'>
                                 优便公众号
                                 <div class="wechatbox">
                                     <img src="../assets/pic/wechat.jpg" alt="">
+                                    <div class="right">
+                                        <p>轻松关注优便</p>
+                                        <p>1.打开微信扫一扫</p>
+                                        <p>2.对准二维码即可关注</p>
+                                    </div>
                                 </div>
                             </li>
                         </ul>
@@ -112,32 +114,48 @@
     }
 </script>
 <style scoped lang='less'>
-.sina:hover .sinabox{
-    display: block;
+.sina a{
+    color:#8c8c8c;
+    text-decoration: none;
+}
+.sina:hover a{
+    color:#dd5519
 }
 .wechat:hover .wechatbox{
     display: block;
 }
-.sinabox,.wechatbox{
+.wechatbox{
+    left:90px;
+    bottom: 15px;
     position:absolute;
-    left:-25px;
     background-color: #fff;
-    width: 100px;
-    height: 100px;
-    padding:10px;
+    padding:5px;
+    width: 240px;
     border-radius:4px;
     border:1px solid #eaeaea;
     z-index: 9999;
     display: none;
-    img{
-        width: 100%;
+    .right{
+        margin-left:10px;
+        float: left;
+        p{
+            font-size:12px;
+            color:#4f4f4f;
+        }
+        p:first-child{
+            color:#dd5519;
+            font-size: 14px;
+            font-weight: 600;
+        }
     }
-}
-.sinabox{
-    bottom:-25px;
-}
-.wechatbox{
-        bottom:0px;
+    img{
+        margin-top:5px;
+        float: left;
+        display: block;
+        width: 90px;
+        padding-right:10px;
+        border-right:1px solid #eaeaea;
+    }
 }
 /**/
 .lf{
