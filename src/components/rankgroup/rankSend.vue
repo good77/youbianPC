@@ -62,9 +62,9 @@
                     <td class='ranknum' v-if="index==0"><img src="../../assets/pic/rank-first.png" alt="" class='icon-rank'></td>
                     <td class='ranknum' v-if="index==1"><img src="../../assets/pic/rank-second.png" alt="" class='icon-rank'></td>
                     <td class='ranknum' v-if="index==2"><img src="../../assets/pic/rank-third.png" alt="" class='icon-rank'></td>
-                    <td class='ranknum' v-if="index>2">{{index+1}}</td>
-                    <td class='rankorder'>{{item.sum}}</td>
-                    <td class='rankuser'>{{item.get_user.name}}</td>
+                     <td class='ranknum color_666' v-if="index>2">{{index+1}}</td>
+                    <td class='rankorder' :class="{color_666:index>2}">{{item.sum}}</td>
+                    <td class='rankuser' :class="{color_666:index>2}">{{item.get_user.name}}</td>
                 </tr>
             </table>
         </div>
@@ -115,7 +115,10 @@
 <style scoped lang='less'>
 /* class='color-fdbb30'*/
 .color-fdbb30{
-    color:#fdbb30;
+    color:#dd5519;
+}
+.color_666{
+    color:#333;
 }
 .icon-rank{
     vertical-align: middle;

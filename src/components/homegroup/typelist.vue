@@ -139,11 +139,11 @@
         .type-text{
             padding-top:10px;
             font-size:16px;
-            height: 65px;
+            height: 55px;
             overflow: hidden;
             background-color: #fff;
             flex-wrap: wrap;
-            padding:0 0 0 20px;
+            padding:8px 0 10px 20px;
             li{
                 float: left;
                 width: auto;

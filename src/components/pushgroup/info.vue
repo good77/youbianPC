@@ -16,7 +16,7 @@
                             size="large"
                             :options="citylist"
                             v-model="selectedOptions"
-                            @change="handleChange">
+                            @change="handleChange1">
                         </el-cascader>
                   </div>
                 </li>
@@ -45,9 +45,15 @@
                   </div>
                 </li>
                  <li>
-                  <span class='xinghao'>*</span>周期
-                  <div class='iptbox'>
-                    <el-input  placeholder="请输入完成周期 如：(1天)" v-model="cycle" @change="changeCycle"></el-input>
+                  <span class='xinghao'  style='display:block;float:left'>*</span><span style='display:block;float:left;margin-right:20px'>周期&nbsp</span>  
+                  <div class='iptbox' style='display:flex'>
+                    <el-input  placeholder="如：(1天)" v-model="cycle1" @change="changeCycle" style="width:160px;margin-right:10px"></el-input>
+                    <el-select v-model="select" slot="prepend" placeholder="请选择" @change='changeCycle2' style="width:100px">
+                        <el-option label="分钟" value="分钟"></el-option>
+                        <el-option label="小时" value="小时"></el-option>
+                        <el-option label="天" value="天"></el-option>
+                         <el-option label="月" value="月"></el-option>
+                    </el-select>
                   </div>
                 </li>
                
@@ -84,7 +90,7 @@
                 <div class='title'>
                     描述内容
                 </div>
-                <textarea v-model="describe"></textarea>
+                <textarea v-model="describe" placeholder="请对服务的内容进行详细的描述（如有必要，请上传图片）"></textarea>
             </div>
              <div class="upload">
                 <div class='title'>
@@ -103,6 +109,7 @@
                         <el-dialog :visible.sync="dialogVisible">
                         <img width="100%" :src="dialogImageUrl" alt="">
                     </el-dialog>
+                    <p>（支持jpg、png格式）</p>
                 </div>
             </div>
         </div>
@@ -130,6 +137,7 @@ export default {
       price:'',
       number:'',
       cycle:'',
+      cycle1:'',
       describe: '',
       province_code:'',
       city_code:'',
@@ -142,6 +150,7 @@ export default {
       img:[],
       file:'',
       fileList1:[],
+      select:'天'
     };
   },
    computed:{
@@ -189,9 +198,15 @@ export default {
       }
     },
     handleChange(value) {
+      this.level_one=value[0];
+      this.level_two = value[1];
+      this.level_three = value[2]
+    },
+     handleChange1(value) {
       this.province_code=value[0];
       this.city_code = value[1];
       this.area_code = value[2]
+
     },
     send(){
       console.log(this.describe)
@@ -304,7 +319,12 @@ export default {
       this.title=a;
     },
     changeCycle(a){
-      this.cycle=a;
+      this.cycle=a+this.select;
+      console.log(this.cycle)
+    },
+    changeCycle2(a){
+      this.cycle=this.cycle1+a;
+      console.log(this.cycle)
     },
     goback(){
       this.$router.go(-1)

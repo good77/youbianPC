@@ -59,7 +59,7 @@
             <div class="info">
                 <div class="info-main">
                     <p class='xxxx'>详细信息</p>
-                    <embed :src="goodsDetail.video_url" allowFullScreen="true" quality="high" width="480" height="400" align="middle" allowScriptAccess="always" type="application/x-shockwave-flash"></embed>
+                   <iframe height=498 width=510 :src='goodsDetail.video_url'></iframe>
                     <div v-html='goodsDetail.describe'></div>
                     <ul style='margin-top:20px;'>
                         <li v-for="(item,key) in goodsDetail.img" :key=key>
@@ -110,9 +110,9 @@
                                 周期：{{item.cycle}}
                             </div>
                         </div>
-                        <router-link tag='div' :to="{path:'/tcbmain',query:{id:item.id}}" class="item-bottom">
+                        <div @click="goGoods(item.id)" class="item-bottom">
                             查看详情
-                        </router-link>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -142,6 +142,9 @@ export default {
       }
   },
   methods: {
+     goGoods(id){
+        window.open('./#/tcbmain?id='+id)
+    },
      onCopy: function (e) {
          this.$alert('复制成功，请将链接粘贴发送给好友!', {
           confirmButtonText: '确定',

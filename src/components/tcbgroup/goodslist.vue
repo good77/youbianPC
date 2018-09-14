@@ -102,8 +102,8 @@
                     </div>
                 </div>
                 <div class="item-right">
-                    <router-link tag='span' :to="{path:'/gtu',query:{id:item.get_user.id}}" class='username'><img src="../../assets/pic/icon-vip.png" alt="" class='icon-vip'>{{item.get_user.name}}</router-link>
-                    <router-link tag='button' :to='{path:"/tcbmain",query:{id:item.id}}' class='getdetail'>查看详情</router-link>
+                    <span @click="goUser(item.get_user.id)" class='username'><img src="../../assets/pic/icon-vip.png" alt="" class='icon-vip'>{{item.get_user.name}}</span>
+                    <button @click="goGoods(item.id)" class='getdetail'>查看详情</button>
                 </div>
             </li>
         </ul>
@@ -277,6 +277,12 @@
             }
         },
         methods: {
+            goUser(id){
+                window.open('./#/gtu?id='+id)
+            },
+            goGoods(id){
+                window.open('./#/tcbmain?id='+id)
+            },
             prev(num){
                 this.pagenum=num
             },
@@ -660,7 +666,6 @@
             }
         },
         mounted(){
-            console.log(this.type)
             this.$store.dispatch('getAllCate');
             if(this.level_one==10){
                 var data ={

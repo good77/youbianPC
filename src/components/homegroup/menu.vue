@@ -11,7 +11,7 @@
                         <li v-for='(item1,index1,key) in item.son' :key="key" :class="{isActive:flag[index]==index1}" >
                             <span @mouseover="active(index,index1)">{{item1.name}}</span>
                             <ul class='third-list' v-if="flag[index]==index1">
-                                <li v-for='(item2,key) in item1.sons' :key=key>
+                                <li v-for='(item2,index2,key) in item1.sons' :key="key" v-if="index2<16">
                                     <router-link tag='span' :to="{path:'/tcb',query:{level_one:item.id,level_two:item1.id,level_three:item2.id}}">{{item2.name}} </router-link>
                                 </li>
                             </ul>

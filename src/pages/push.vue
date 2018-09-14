@@ -22,6 +22,10 @@
         created(){
             if(!window.sessionStorage.getItem('token')){
                 this.$router.push('/user/login')
+                this.$message({
+                    type:'warning',
+                    message:'抱歉，需要登录后才能发布信息'
+                })
             }
         }
     }
