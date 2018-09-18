@@ -4,12 +4,21 @@
             <img :src="banner.img" alt="">
         </div>
         <ul class="acttabs">
-            <li @click='getList(0,$event)' :class="{active:isActive==0}">进行中</li>
-            <li  @click='getList(1,$event)' :class="{active:isActive==1}">长期活动</li>
-            <li @click='getList(2,$event)' :class="{active:isActive==2}">已结束</li>
+            <li @click='getList(0,$event)' :class="{active:isActive==0}" style='position:relative'>
+                进行中
+                <img src="../../assets/pic/guide.png" alt="" style='position:absolute;bottom:-10px;left:20px;' v-if="isActive==0">
+            </li>
+            <li  @click='getList(1,$event)' :class="{active:isActive==1}" style='position:relative'>
+                长期活动
+                <img src="../../assets/pic/guide.png" alt="" style='position:absolute;bottom:-10px;left:20px;' v-if="isActive==1">
+            </li>
+            <li @click='getList(2,$event)' :class="{active:isActive==2}" style='position:relative'>
+                已结束
+                <img src="../../assets/pic/guide.png" alt="" style='position:absolute;bottom:-10px;left:20px;' v-if="isActive==2">
+            </li>
         </ul>
         <ul class="actlist">
-            <li class='actitem' v-for='(item,index,key) in actList.data' :key="key">
+            <li class='actitem' v-for='(item,index,key) in actList.data' v-if="index>=((pagenum-1)*10)&&index<(pagenum*10)" :key="key">
                 <div class="itemmain"  v-if='item.is_img==0'>
                     <p class="title">{{item.title_one}}</p>
                     <p class="vicetitle">{{item.title_two}}</p>
@@ -18,17 +27,22 @@
                 <div class="itemmain-else" v-if='item.is_img==1'>
                     <img :src="item.img" alt="">
                 </div>
-                <router-link tag='button' :to="{path:'/actmain',query:{id:item.id}}" class='getdetail'>查看详情</router-link>
+                <button @click='goact(item.id)' class='getdetail'>查看详情</button>
             </li>
         </ul>
-         <div class="pagerbox">
-            <el-pagination
+         <div class="pagerbox"  v-if="actList.data.length>0">
+            <div class="pager">
+                <el-pagination
                 background
                 layout="prev, pager, next"
-                :total=total
+                :total="actList.data.length"
                 class='pager'
+                @prev-click="prev"
+                @next-click="next"
+                @current-change="current"
                 >
             </el-pagination>
+            </div>
         </div>
     </div>
 </template>
@@ -36,14 +50,27 @@
     export default{
         data(){
             return {
-                isActive:0
+                isActive:0,
+                pagenum:1
             }
         },
         methods:{
             getList(type){
                 this.isActive=type;
                 this.$store.dispatch('getAct',type)
-            }
+            },
+            goact(id){
+                window.open('./#/actmain?id='+id)
+            },
+            prev(num){
+                this.pagenum=num
+            },
+            next(num){
+                this.pagenum=num
+            },
+            current(num){
+                this.pagenum=num
+            },
         },
         computed:{
             banner:function(){
@@ -60,8 +87,7 @@
 </script>
 <style scoped lang='less'>
 .active{
-    color:#ea9314 !important;
-    border-bottom:2px solid #ea9314
+    color:#dd5519 !important;
 }
 /*分页*/
 .pagerbox{
@@ -104,12 +130,12 @@
         }
         li:hover{
             cursor: pointer;
-            color:#ea9314;
+            color:#dd5519;
         }
     }
     .actlist{
         overflow: hidden;
-        padding-top:20px;
+        padding-top:40px;
         li{
             float: left;
             margin-bottom: 40px;
@@ -155,8 +181,12 @@
                 overflow: hidden;
                  margin-bottom:20px;
                 img{
+                    transition: all .5s;
                     width:100%;
                     height: 100%;
+                }
+                img:hover{
+                    transform: scale(1.05);
                 }
             }
             .getdetail{

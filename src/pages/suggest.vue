@@ -99,6 +99,9 @@ import Token from '../store/token'
                 return this.$store.state.footer1
             }
         },
+        created(){
+            document.title='优便-意见反馈'
+        },
         mounted(){
             var id = this.$route.query.id;
             var title_id = this.$route.query.title_id;

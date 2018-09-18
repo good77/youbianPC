@@ -422,6 +422,7 @@ export default {
   text-align: center;
   line-height: 40px;
   color: #999;
+  font-size:16px;
 }
 .optionbox {
   padding-top: 40px;

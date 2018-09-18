@@ -17,6 +17,9 @@
             HeaderCom,
             FooterCom
         },
+        created(){
+            document.title='优便-榜单'
+        },
     }
 </script>
 <style scoped lang='less'>

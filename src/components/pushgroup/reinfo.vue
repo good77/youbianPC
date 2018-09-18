@@ -35,6 +35,7 @@
                       :on-success='success1'
                       name='img'
                       :limit="1"
+                       @on-remove='removeFile'
                       :file-list="fileList1">
                       <el-button size="small" type="primary">点击上传</el-button>
                     </el-upload>
@@ -49,7 +50,7 @@
                 <div class='title'>
                     描述内容
                 </div>
-                <textarea v-model="detail.describe"></textarea>
+                <textarea v-model="detail.describe" placeholder="请对服务的内容进行详细的描述（限制100字以内）" @keyup="checkzishu"></textarea>
             </div>
              <div class="upload">
                 <div class='title'>
@@ -116,6 +117,11 @@ export default {
       }
    },
   methods: {
+     checkzishu(){
+      if(this.describe.length>100){
+        this.describe = this.describe.substring(0,100)
+      }
+    },
     jiami(){
       if(this.isClock){
         this.isClock=false
@@ -198,6 +204,9 @@ export default {
     },
     success1(res, file, fileList){
         this.file=res.data
+    },
+    removeFile(){
+      this.file=''
     },
     changePrice(a){
       this.price=a;

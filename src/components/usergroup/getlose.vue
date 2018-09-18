@@ -28,6 +28,9 @@ import qs from 'qs'
                 timer:''
             }
         },
+        created(){
+            document.title='优便-找回密码'
+        },
         methods:{
             getcode(){
                 if(this.phone){

@@ -15,6 +15,9 @@
                 
             }
         },
+        created(){
+            document.title='优便-查看用户'
+        },
         components:{
             HeaderCom,
             TxClick,

@@ -76,7 +76,7 @@
             <li v-for='(item,index,key) in goodsList' v-if="index>=((pagenum-1)*10)&&index<(pagenum*10)"  :key=key>
                 <div class="item-left">
                     <div class="title">
-                        <router-link tag='span' :to='{path:"/tcbmain",query:{id:item.id}}' class='getdetail'>{{item.title}}</router-link>
+                        <span @click='goGoods(item.id)' class='getdetail'>{{item.title}}</span>
                         <span v-show="true">
                             <img src="../../assets/pic/icon-you.png" alt="" class='icon-you' v-if='item.order_type==2'>
                         </span>
@@ -85,7 +85,7 @@
                         </span>
                     </div>
                     <div class="type-date">
-                        <p style='text-overflow:ellipsis;width:300px;overflow:hidden;white-space:nowrap;font-size:12px;'>{{item.describe}}</p>
+                        <p style='text-overflow:ellipsis;width:300px;overflow:hidden;white-space:nowrap;font-size:14px;'>{{item.describe}}</p>
                         <span class='type'><img src="../../assets/pic/icon-type.png" alt="" class='icon-type'>{{item.get_one.name}}-{{item.get_two.name}}-{{item.get_three.name}}</span>
                         <span class='date'><img src="../../assets/pic/icon-date.png" alt="" class='icon-date'>{{item.update_time}}</span>
                     </div>
@@ -666,6 +666,7 @@
             }
         },
         mounted(){
+            window.scrollTo(0,0)
             this.$store.dispatch('getAllCate');
             if(this.level_one==10){
                 var data ={
@@ -813,6 +814,7 @@
     justify-content: flex-start;
     border-bottom:1px solid #eff3f5;
     li{
+        font-size:16px;
         width: 100px;
         height: 50px;
         line-height: 50px;

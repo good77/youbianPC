@@ -23,8 +23,11 @@
             TcbDetail,
             FooterCom
         },
+        created(){
+            document.title='优便-订单详情'
+        },
         methods:{
-          
+            
         },
         mounted(){
             window.scrollTo(0,0);

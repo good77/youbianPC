@@ -14,6 +14,8 @@ import PushInfo from '@/pages/push'
 import GoToUser from '@/pages/toUser'
 import Mine from '@/pages/mine'
 import Suggest from '@/pages/suggest'
+//注册协议
+import Agreement from '@/pages/agreement'
 //push下子路由
 import Info from '@/components/pushgroup/info'
 import Reinfo from '@/components/pushgroup/reinfo'
@@ -38,6 +40,7 @@ import ChangeTel from '@/components/minegroup/changetel'
 import RankRec from '@/components/rankgroup/rankRec'
 import RankSend from '@/components/rankgroup/rankSend'
 
+
 Vue.use(Router)
 
 export default new Router({
@@ -46,6 +49,10 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/agreement',
+      component: Agreement
     },
     {
       path: '/home',

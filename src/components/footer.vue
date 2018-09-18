@@ -49,10 +49,10 @@
                     <li class='lf'>
                         <p class='service-title'>服务支持</p>
                         <ul>
-                           <router-link :to="{path:'/newsmain',query:{title_id:1}}" tag='li'>诚信服务</router-link>
-                           <router-link :to="{path:'/newsmain',query:{title_id:2}}" tag='li'>规则中心</router-link>
-                           <router-link :to="{path:'/newsmain',query:{title_id:3}}" tag='li'>客户中心</router-link>
-                           <router-link :to="{path:'/newsmain',query:{title_id:4}}" tag='li'>招商加盟</router-link>
+                           <router-link :to="{path:'/newsmain',query:{title_id:1}}" tag='li' @click='hasClick(1)' :class="{hasClick:hasClick==1}">诚信服务</router-link>
+                           <router-link :to="{path:'/newsmain',query:{title_id:2}}" tag='li' @click='hasClick(2)' :class="{hasClick:hasClick==2}">规则中心</router-link>
+                           <router-link :to="{path:'/newsmain',query:{title_id:3}}" tag='li' @click='hasClick(3)' :class="{hasClick:hasClick==3}">客户中心</router-link>
+                           <router-link :to="{path:'/newsmain',query:{title_id:4}}" tag='li' @click='hasClick(4)' :class="{hasClick:hasClick==4}">招商加盟</router-link>
                         </ul>
                     </li>
                     <li class='lf'>
@@ -95,25 +95,39 @@
                     </li>
                     <li class='lf'>
                         <p class='service-title'>服务热线</p>
-                        <p class='hot-line'>212-2525-2525</p>
-                        <p class='service-date'>周一至周日9:00-19:00</p>
+                        <p class='hot-line'>181-3363-5661</p>
+                        <p class='service-date'>周一至周日8:00-20:00</p>
                     </li>
                 </ul>
             </div>
             <div class="qrcode">
-                <img src="../assets/pic/qrcode.png" alt="" class='pic-qrcode'>
+                <img src="../assets/pic/kfwx.jpg" alt="" class='pic-qrcode'>
+                <p style='font-size:12px'>扫码添加优便官方微信！</p>
             </div>
         </div> 
         <div class="footer-bottom">
-            Copyright：武汉中奥互联科技有限公司
+            CopyRight：2018-2019 武汉中奥互联科技有限公司 版权所有 | 皖ICP备18015008号-1
         </div>
     </footer>
 </template>
 <script>
     export default{
+        data(){
+            return {
+                hasClick:''
+            }
+        },
+        methods:{
+            hasClick(id){
+                this.hasClick=id
+            }
+        }
     }
 </script>
 <style scoped lang='less'>
+.hasClick{
+    color:#dd5519!important;
+}
 .sina a{
     color:#8c8c8c;
     text-decoration: none;
@@ -266,10 +280,13 @@ footer{
             }
         }
         .qrcode{
+            line-height: 20px;
             .pic-qrcode{
+                margin-left: 15px;
                 width: 94px;
                 height: 94px;
             }
+
         }
     }
     .footer-bottom{

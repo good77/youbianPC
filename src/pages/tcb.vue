@@ -18,7 +18,11 @@
             HeaderCom,
             GoodsList,
             FooterCom
-        }
+        },
+        created(){
+            document.title='优便-订单列表'
+        },
+        
     }
 </script>
 <style scoped lang='less'>

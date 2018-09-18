@@ -279,6 +279,11 @@ import Token from '../../store/token'
     line-height: 25px;
     width:55px!important;
 }
+.butongguo:hover{
+    cursor: pointer;
+    background-color:#f00;
+    color:#fff;
+}
 .color-f00{
     color:#f00;
 }
@@ -288,14 +293,23 @@ import Token from '../../store/token'
 .color-5cce5c{
     color:#5cce5c;
 }
+.color-5cce5c:hover{
+    background-color:#5cce5c;
+    color:#fff;
+}
 .tongguo{
-        border:1px solid #ea910f;
+    border:1px solid #ea910f;
     color:#ea910f;
     border-radius:3px;
     display: inline-block;
     height: 25px;
     line-height: 25px;
     width:55px!important;
+}
+.tongguo:hover{
+    cursor: pointer;
+    background-color:#ea910f;
+    color:#fff;
 }
 .daiqueren{
     color:#ea910f
@@ -304,13 +318,19 @@ import Token from '../../store/token'
     color:#ea910f;
 }
 .pingjia{
-    border:1px solid #ea910f;
-    color:#ea910f;
+
+    border:1px solid #5cce5c;
+    color:#5cce5c;
     border-radius:3px;
     display: inline-block;
     height: 25px;
     line-height: 25px;
     width:55px!important;
+}
+.pingjia:hover{
+    cursor: pointer;
+    background-color:#5cce5c;
+    color:#fff;
 }
 .area{
     width: 100%;

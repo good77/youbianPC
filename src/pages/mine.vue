@@ -19,6 +19,7 @@
             FooterCom
         },
         created(){
+            document.title="优便-个人中心"
             var token = window.sessionStorage.getItem('token');
             if(!token){
                 this.$message({

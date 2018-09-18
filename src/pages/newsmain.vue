@@ -15,6 +15,9 @@
             NewsDetail,
             FooterCom
         },
+        created(){
+            document.title='优便-资讯详情'
+        },
     }
 </script>
 <style scoped lang='less'>

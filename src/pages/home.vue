@@ -18,6 +18,9 @@
         data(){
             return {}
         },
+        created(){
+            document.title='优便'
+        },
         components:{
             HeaderCom,
             Advertise,

@@ -9,6 +9,7 @@ const state={
 	//主页banner
 	bannerList:[],
 	quick:'',
+	hotSrh:'',
 	//主页三级分类
 	cate:[],
 	hotCate:[],
@@ -97,6 +98,10 @@ export default new vuex.Store({
 		},
 		setHotcate(context,data){
 			state.hotCate = data.popular
+		},
+		setHotSrh(context,data){
+			state.hotSrh = data.search;
+			console.log(state.hotSrh)
 		},
 		//底部导航
 		setFooter1(context,data){
@@ -222,6 +227,7 @@ export default new vuex.Store({
 					context.commit('setHotcate',data)
 					context.commit("setBanner",data);
 					context.commit("setCate",data);
+					context.commit("setHotSrh",data);
                 }
             });
 		},

@@ -32,12 +32,14 @@
                     <img src='../../assets/pic/ribang2.png' alt="" v-show="bangdan.ri2">
                 </div>
             </li>
+                       <li class='line'></li>
             <li>
                  <div class="btn-box"  v-on:click=timetab(2)>
                     <img src='../../assets/pic/zhoubang1.png' alt="" v-show="bangdan.zhou1">
                     <img src='../../assets/pic/zhoubang2.png' alt="" v-show="bangdan.zhou2">
                 </div>
             </li>
+                       <li class='line'></li>
             <li>
                  <div class="btn-box"  v-on:click=timetab(3)>
                     <img src='../../assets/pic/yuebang1.png' alt="" v-show="bangdan.yue1">
@@ -140,7 +142,7 @@
       left: 500px;
       top: 174px;
       .circle {
-          overflow: hidden;
+        overflow: hidden;
         width: 208px;
         height: 208px;
         border-radius: 50%;
@@ -148,18 +150,17 @@
         margin-bottom: 30px;
         img{
             width: 100%;
-
         }
       }
     }
     .user-second {
       .circle {
+          overflow: hidden;
         width: 162px;
         height: 162px;
         border-radius: 50%;
         background-color: #000;
         margin-bottom: 30px;
-        overflow: hidden;
         img{
             width: 100%;
         }
@@ -169,12 +170,12 @@
     }
     .user-third {
       .circle {
-        overflow: hidden;
         width: 162px;
         height: 162px;
         border-radius: 50%;
         background-color: #000;
         margin-bottom: 30px;
+        overflow: hidden;
         img{
             width:100%;
         }
@@ -184,13 +185,13 @@
     }
   }
   .time-tab{
-      padding:60px 0 60px 0;
+      padding:60px 0 10px 0;
       width: 1200px;
       margin:auto;
       display: flex;
       justify-content: space-around;
       li{
-          width: 400px;
+          width: 360px;
           height: 90px;
           text-align: center;
           .btn-box{
@@ -198,12 +199,21 @@
               img{
                   position: absolute;
                   top:0;
-                  left:65px;
+                  left:50px;
               }
           }
       }
+      .line{
+          height: 0px;
+          border-bottom: 2px solid #999;
+          width: 50px;
+          margin:0;
+          margin-top:40px;
+      }
   }
   .ranklist {
+      font-size:16px;
+      font-weight: 500;
       table{
           border-collapse: collapse;
           margin-bottom:60px;
@@ -228,6 +238,7 @@
             }
         }
         .table-tip{
+            font-weight: 600;
             color:#dd5519;
         }
   }

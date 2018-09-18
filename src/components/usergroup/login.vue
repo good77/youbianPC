@@ -22,6 +22,9 @@ import qs from 'qs'
                 timer:''
             }
         },
+        created(){
+            document.title='优便-登录'
+        },
         methods:{
             login(){
                 var phone= this.phone;
@@ -105,14 +108,24 @@ import qs from 'qs'
             color:#4f4f4f;
         }
         .losepwd{
+            cursor: pointer;
             text-align: right;
             font-size:16px;
             color:#cfcfcf;
             margin-bottom:10px;
+            font-size:13px;
+        }
+        .losepwd:hover{
+            color:#dd5519;
+            text-decoration: underline;
         }
         .register{
             text-align: center;
             color:#dd5519;
+            cursor: pointer;
+        }
+        .register:hover{
+            text-decoration: underline;
         }
     }
 }

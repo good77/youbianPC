@@ -28,7 +28,10 @@
         },
         mounted(){
             this.$store.dispatch('getAct',0)
-        }
+        },
+        created(){
+            document.title='优便-活动中心'
+        },
     }
 </script>
 <style scoped lang='less'>

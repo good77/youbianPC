@@ -70,7 +70,7 @@
                         <span class='op'>
                             <span v-if="item.type==0">
                                 <router-link :to="{path:'/push/reinfo',query:{id:item.id}}" tag='span' class='xiugai'>修改</router-link>
-                                <span class='del' @click='del(item.id)'>删除</span>
+                                <span class='clear' @click='del(item.id)'>删除</span>
                                 </span>
                              <span v-if="item.type==1">
                             </span>
@@ -215,6 +215,11 @@ import Token from '../../store/token'
     line-height: 25px;
     width:55px!important;
 }
+.butongguo:hover{
+    cursor: pointer;
+    background-color:#f00;
+    color:#fff;
+}
 .color-ea910f{
     color:#ea910f;
 }
@@ -241,6 +246,11 @@ import Token from '../../store/token'
     line-height: 25px;
     width:55px!important;
 }
+.xiugai:hover{
+    cursor: pointer;
+    background-color:#999;
+    color:#fff;
+}
 .clear{
     border:1px solid #659AE3;
     color:#659AE3;
@@ -249,6 +259,11 @@ import Token from '../../store/token'
     height: 25px;
     line-height: 25px;
     width:55px!important;
+}
+.clear:hover{
+    cursor: pointer;
+    background-color:#659AE3;
+    color:#fff;
 }
 .title{
     text-indent:15px;;

@@ -237,8 +237,8 @@
             <div class="top-right">
                 <div class="login-register" v-if="!username">
                     请<span class='font-login'>
-                        <router-link tag="span" to="/user/login">登录</router-link>/
-                        <router-link tag="span" to="/user/register">注册</router-link>
+                        <router-link tag="span" to="/user/login" class='lrbtn'>登录</router-link>/
+                        <router-link tag="span" to="/user/register" class='lrbtn'>注册</router-link>
                     </span>
                 </div>
                  <div class="login-register" v-if="username">
@@ -289,11 +289,11 @@
                 <img src="../assets/pic/icon-srh.png" alt="" class='icon-srh'>
                 <input type="text" class='ipt' placeholder="请输入您想要搜索的关键字" v-model='srhtext' @keyup.enter="srh">
                 <button class='btn' @click='srh'>搜索</button>
-                <div class="wordlist">
-                    <span @click="gosrh('dog')">dog</span>
-                    <span @click="gosrh('url')">url</span>
-                    <span @click="gosrh('999888')">999888</span>
-                </div>
+                <ul class="wordlist">
+                    <li v-for="(item,index,key) in hotSrh" :key="key" @click='gosrh(item.title)'>
+                        {{item.title}}
+                    </li>
+                </ul>
             </div>
             <router-link tag='div' :to="{path:'/push/info'}" class="sent-info">
                 发布信息
@@ -330,6 +330,9 @@ import cityList from 'china-city-data';
             quick:function(){
                 return this.$store.state.quick.cate
             },
+            hotSrh:function(){
+                return this.$store.state.hotSrh;
+            }
         },
         methods:{
             gosrh(str){
@@ -409,6 +412,9 @@ header{
         text-indent: 6px;
         color:#666;
     }
+    .lrbtn:hover{
+        color:#dd5519;
+    }
 }
 .nav-text:hover{
     cursor: pointer;
@@ -424,7 +430,7 @@ header{
     color:#dd5519;
 }
 .font-login{
-    color:#dd5519;
+    color:#666;
 }
 .icon{
     display:inline-block;
@@ -721,7 +727,13 @@ header{
                 font-size:12px;
                 cursor: pointer;
                 margin-left:5px;
-                color:#dd5519;
+                li{
+                    float: left;
+                    margin-right:10px;
+                }
+                li:hover{
+                    color:#dd5519;
+                }
             }
             .icon-srh{
                 margin-top:8px;

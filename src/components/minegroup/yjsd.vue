@@ -314,6 +314,16 @@ import Token from '../../store/token'
     line-height: 25px;
     width:70px!important;
 }
+.wancheng:hover{
+    cursor: pointer;
+    background-color:#ea910f;
+    color:#fff;
+}
+.cxwc:hover{
+    cursor: pointer;
+    background-color:#ea910f;
+    color:#fff;
+}
 .pingjia{
         height: 25px;
     line-height: 25px;
@@ -322,6 +332,11 @@ import Token from '../../store/token'
     border:1px solid #5cce5c;
     color:#5cce5c;
     border-radius:3px;
+}
+.pingjia:hover{
+    cursor: pointer;
+    background-color:#5cce5c;
+    color:#fff;
 }
 .area{
     width: 100%;

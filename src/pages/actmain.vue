@@ -21,6 +21,9 @@
             ActDetail,
             FooterCom
         },
+        created(){
+            document.title='优便-活动详情'
+        },
         methods:{
           
         },

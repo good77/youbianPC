@@ -9,7 +9,7 @@
             </div>
             <ul class="type-text font-color-1">
                 <li v-for='(item,key) in hotCate[0].sons'>
-                    <router-link :to="{path:'/tcb',query:{level_one:hotCate[0].id,level_two:item.parent_id,level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
+                    <span @click="golist(hotCate[0].id,item.parent_id,item.id)">{{item.name}}　</span>
                 </li>
             </ul>
         </li>
@@ -22,7 +22,7 @@
             </div>
             <ul class="type-text font-color-2">
                  <li v-for='(item,key) in hotCate[1].sons'>
-                    <router-link :to="{path:'/tcb',query:{level_one:hotCate[1].id,level_two:item.parent_id,level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
+                    <span @click="golist(hotCate[1].id,item.parent_id,item.id)">{{item.name}}　</span>
                 </li>
             </ul>
         </li>
@@ -35,7 +35,7 @@
             </div>
             <ul class="type-text font-color-3">
                <li v-for='(item,key) in hotCate[2].sons'>
-                    <router-link :to="{path:'/tcb',query:{level_one:hotCate[2].id,level_two:item.parent_id,level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
+                    <span @click="golist(hotCate[2].id,item.parent_id,item.id)">{{item.name}}　</span>
                 </li>
             </ul>
         </li>
@@ -48,7 +48,7 @@
             </div>
             <ul class="type-text font-color-4">
                 <li v-for='(item,key) in hotCate[3].sons'>
-                    <router-link :to="{path:'/tcb',query:{level_one:hotCate[3].id,level_two:item.parent_id,level_three:item.id}}" tag='span'>{{item.name}}　</router-link>
+                   <span @click="golist(hotCate[3].id,item.parent_id,item.id)">{{item.name}}　</span>
                 </li>
             </ul>
         </li>
@@ -64,6 +64,11 @@
         watch:{
             hotCate:function(){
                 console.log(this.hotCate)
+            }
+        },
+        methods:{
+            golist(level_one,level_two,level_three){
+                window.open('./#/tcb?level_one='+level_one+'&level_two='+level_two+'&level_three='+level_three)
             }
         }
     }
@@ -139,7 +144,7 @@
         .type-text{
             padding-top:10px;
             font-size:16px;
-            height: 55px;
+            height: 85px;
             overflow: hidden;
             background-color: #fff;
             flex-wrap: wrap;

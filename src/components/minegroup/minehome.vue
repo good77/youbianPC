@@ -3,12 +3,26 @@
         <div class="top">
             <div class="userbox">
                 <div class="touxiang">
-                    <img :src="userCenter.img" alt="">
+                    <img :src="imgDataUrl" v-if="imgDataUrl">
+                    <img :src="userCenter.img" alt=""  v-else="imgDataUrl">
                 </div>
+                 <a class="txbtn" @click="toggleShow" style='position:absolute;top:125px;left:33px;cursor:pointer'>设置头像</a>
+                    <my-upload field="img"
+                          @crop-success="cropSuccess"
+                          @crop-upload-success="cropUploadSuccess"
+                          @crop-upload-fail="cropUploadFail"
+                          v-model="show"
+                          :width="200"
+                          :height="200"
+                          url="http://www.youbian.link/api/v1/user/user_edit"
+                          :params="params"
+                          :headers="headers"
+                          img-format="png">
+                      </my-upload>
                 <div class="ziliao">
                     <p>用户名：<span>{{userCenter.name}}</span></p>
                     <p v-if="userCenter.grade_status==1"><i class='iconfont icon-VIP size-18 '></i>{{userCenter.members_end}}<router-link to="/mine/vipup" tag='span' class='quxufei'>去续费</router-link></p>
-                    <p v-if="userCenter.grade_status==0">普通会员&nbsp<router-link to="/mine/vipup" tag='span' class='quxufei'>去升级</router-link></p>
+                    <p v-if="userCenter.grade_status==0">会员等级：普通会员&nbsp<router-link to="/mine/vipup" tag='span' class='quxufei'>去升级</router-link></p>
                     <p class='jiedan'>我的接单：<span class='color-dd5519'>{{userCenter.receive_num1}}</span></p>
                     <p class='fadan'>我的发单：<span class='color-3d7f4f'>{{userCenter.release_num1}}</span></p>
                 </div>
@@ -75,17 +89,28 @@
     </div>
 </template>
 <script>
+import myUpload from 'vue-image-crop-upload'
+import Token from '../../store/token'
     export default{
         data(){
             return {
                 pager:'',
                 now:1,
+                show: false,
+                params: {},
+                headers: {
+                    token: Token.fetch(),
+                },
+                imgDataUrl: '', // the datebase64 url of created image,
             }
         },
         computed:{
             userCenter:function(){
                 return this.$store.state.userCenter
             }
+        },
+        components: {
+            myUpload,
         },
         mounted(){
             var obj=this
@@ -101,7 +126,42 @@
                 if(this.now<Math.ceil(this.userCenter.integral_detail.length/7)){
                     this.now++;
                 }
-            }
+            },
+            toggleShow() {
+				this.show = !this.show;
+			},
+            /**
+			 * crop success
+			 *
+			 * [param] imgDataUrl
+			 * [param] field
+			 */
+			cropSuccess(imgDataUrl, field){
+				console.log('-------- crop success --------');
+				this.imgDataUrl = imgDataUrl;
+			},
+			/**
+			 * upload success
+			 *
+			 * [param] jsonData   服务器返回数据，已进行json转码
+			 * [param] field
+			 */
+			cropUploadSuccess(jsonData, field){
+				console.log('-------- upload success --------');
+				console.log(jsonData);
+				console.log('field: ' + field);
+			},
+			/**
+			 * upload fail
+			 *
+			 * [param] status    server api return error status, like 500
+			 * [param] field
+			 */
+			cropUploadFail(status, field){
+				console.log('-------- upload fail --------');
+				console.log(status);
+				console.log('field: ' + field);
+			}   
         }
     }
 </script>
@@ -128,6 +188,7 @@
     .top{
         height: 185px;
         .userbox{
+            position: relative;
             height: 185px;
             float: left;
             .touxiang{
@@ -149,7 +210,8 @@
                     color:#ea910f;
                 }
                 .quxufei{
-                    font-size:14px;
+                    font-size:13px;
+                    text-decoration: underline;
                     color:#ea910f;
                 }
                 .quxufei:hover{ 

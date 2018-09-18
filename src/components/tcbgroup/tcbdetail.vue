@@ -30,12 +30,17 @@
                 </div>
                 <div class="abs-bottom" style='position:relative'>
                     <button class='ljjd' @click='getOrder'>立即接单</button>
-                    <a target="_blank"  :href="goodsDetail.file" download="w3logo" class='xzfj' v-if='goodsDetail.file'><i class='el-icon-download'></i> 下载附件</a>
+                    <span class='download' @click='download'>
+                      <i class='el-icon-download'></i> 下载附件
+                    </span>
                     <input type="text" v-model="message" style='display:none'>
-                    <button class='fxdd'
+                    <!-- <button class='fxdd'
                       v-clipboard:copy="message"
                       v-clipboard:success="onCopy"
-                      v-clipboard:error="onError"><i class='el-icon-share'></i>分享订单</button>
+                      v-clipboard:error="onError"><i class='el-icon-share'></i>分享订单</button> -->
+                      <button class='fxdd'>
+                         <div class="bshare-custom"><a class="bshare-more bshare-more-icon more-style-addthis">分享订单</a></div>
+                      </button>
                 </div>
             </div>
             <div class="userbox">
@@ -58,9 +63,9 @@
         <div class="main">
             <div class="info">
                 <div class="info-main">
-                    <p class='xxxx'>详细信息</p>
-                   <iframe height=498 width=510 :src='goodsDetail.video_url'></iframe>
-                    <div v-html='goodsDetail.describe'></div>
+                    <p class='xxxx'>服务详情</p>
+                    <div v-html='goodsDetail.describe' style='margin-bottom:20px;'></div>
+                    <iframe height=498 width=510 :src='goodsDetail.video_url'></iframe>
                     <ul style='margin-top:20px;'>
                         <li v-for="(item,key) in goodsDetail.img" :key=key>
                           <img :src="item" alt="" />
@@ -125,7 +130,7 @@ export default {
     data(){
         return{
           id:this.$route.query.id,
-          message:window.location.href
+          message:window.location.href,
         }
     },
   computed:{
@@ -135,28 +140,37 @@ export default {
   },
   watch:{
       $route:function(){
-           var id = this.$route.query.id;
+          var id = this.$route.query.id;
           this.$store.dispatch('getGoodsDetail',id);
           this.message= window.location.href
           window.scrollTo(0,0)
       }
   },
   methods: {
+    download(){
+      this.$http({
+        method:'get',
+        url:'http://www.youbian.link/api/v1/receive/download_file',
+        params:{
+          order_id:this.id
+        },
+        headers:{
+          token:Token.fetch()
+        }
+      }).then(res=>{
+        if(res.data.code==200){
+            window.open(res.data.data)
+        }else{
+           this.$message({
+              message: res.data.message,
+              type: 'warning'
+          });
+        }
+      })
+    },
      goGoods(id){
         window.open('./#/tcbmain?id='+id)
     },
-     onCopy: function (e) {
-         this.$alert('复制成功，请将链接粘贴发送给好友!', {
-          confirmButtonText: '确定',
-          callback: action => {
-          
-          }
-        });
-      },
-      onError: function (e) {
-        console.log(e)
-        alert('Failed to copy texts')
-      },
     getOrder(){
       if(Token.fetch()){
          var data = {
@@ -293,6 +307,7 @@ export default {
           height: 40px;
           color: #fff;
           border: 0;
+          font-size:16px;
           border-radius: 4px;
           background-color: #ea910f;
         }
@@ -300,12 +315,12 @@ export default {
           cursor: pointer;
           opacity: .9;
         }
-        .xzfj{
+        .download{
             color:#727272;
-            text-decoration: none
+            text-decoration: none;
+            cursor: pointer;
         }
-        .xzfj:hover {
-          cursor: pointer;
+        .download:hover {
           color: #ea910f;
         }
         .fxdd {
@@ -331,6 +346,7 @@ export default {
       width: 240px;
       height: 150px;
       .bigtx {
+        cursor: pointer;
           overflow: hidden;
         margin: auto;
         width: 80px;
@@ -374,6 +390,7 @@ export default {
         background-color: #fff;
         width: 820px;
         .xxxx {
+          font-size: 16px;
           margin-bottom: 50px;
         }
         .videobox {
@@ -401,7 +418,7 @@ export default {
             width: 60px;
             float: left;
             .txbox {
-                text-align: center;
+              text-align: center;
               width: 40px;
               height: 40px;
               border-radius: 50%;

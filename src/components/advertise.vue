@@ -7,7 +7,7 @@
             <img :src="item.img" alt="">
           </router-link>
           </swiper-slide>
-            <div class="swiper-button-prev" slot="button-prev"></div>
+          <div class="swiper-button-prev" slot="button-prev"></div>
     <div class="swiper-button-next" slot="button-next"></div>
       </swiper>
     </div> 

@@ -20,6 +20,7 @@
             FooterCom
         },
         created(){
+            document.title="优便-发布信息"
             if(!window.sessionStorage.getItem('token')){
                 this.$router.push('/user/login')
                 this.$message({

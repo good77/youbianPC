@@ -10,7 +10,7 @@
                 <input type="text" class='checkcode'  placeholder="请输入验证码" v-model="checkcode">
                 <button class='checkcode-btn' @click="getcode" :disabled="disabled">{{m}}</button>
                 <div class="agree">
-                    <span class='losepwd'>我已阅读<span class='zcxy'>《优便注册协议》</span></span>
+                   <span class='losepwd' @click='read'> <i class='el-icon-success' :class="{hasRead:hasRead==1}"></i>我已阅读</span><span class='zcxy' @click='agreement'>《优便注册协议》</span>
                 </div>
                 <button class='register-btn' @click='register'>立即注册</button>
                 <router-link tag='p' to='/user/login' class='register'>已有账号，去登录></router-link>
@@ -31,10 +31,20 @@ import qs from 'qs'
                 checkcode:'',
                 m:'获取验证码',
                 disabled:false,
-                timer:''
+                timer:'',
+                hasRead:0
             }
         },
+        created(){
+            document.title='优便-注册'
+        },
         methods:{
+            agreement(){
+                 window.open('./#/agreement')
+            },
+            read(){
+                this.hasRead=!this.hasRead;
+            },
             getcode(){
                 if(this.phone){
                     window.clearInterval(this.timer)
@@ -66,37 +76,51 @@ import qs from 'qs'
                 }
              },
             register(){
-                var name=this.username;
-                var phone= this.phone;
-                var password =this.password;
-                var password_confirm = this.repassword
-                var code =this.checkcode
-                var data={
-                    phone,
-                    name,
-                    password,
-                    password_confirm,
-                    code
+                if(this.hasRead==1){
+                    var name=this.username;
+                    var phone= this.phone;
+                    var password =this.password;
+                    var password_confirm = this.repassword
+                    var code =this.checkcode
+                    var data={
+                        phone,
+                        name,
+                        password,
+                        password_confirm,
+                        code
+                    }
+                    this.$http.post(
+                        'http://www.youbian.link/api/v1/member/register', 
+                        qs.stringify(data), 
+                        {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
+                    ).then(res=>{
+                        console.log(res);
+                            this.$message({
+                                message: res.data.message,
+                                type: 'warning'
+                            });
+                        })
+                }else{
+                      this.$message({
+                        message: '您还没有阅读《优便注册协议》',
+                        type: 'warning'
+                    });
                 }
-                this.$http.post(
-                    'http://www.youbian.link/api/v1/member/register', 
-                    qs.stringify(data), 
-                    {headers: {'Content-Type': 'application/x-www-form-urlencoded'}}
-                ).then(res=>{
-                    console.log(res);
-                        this.$message({
-                            message: res.data.message,
-                            type: 'warning'
-                        });
-                    })
-                },
+                }
             }
     }
 </script>
 <style scoped lang='less'>
+.hasRead{
+    color:#dd5519;
+}
 /*zcxy*/
 .zcxy{
+    cursor: pointer;
     color:#dd5519;
+}
+.zcxy:hover{
+    text-decoration: underline;
 }
 /**/
 .registerbox{
@@ -141,10 +165,15 @@ import qs from 'qs'
             font-size:16px;
             color:#cfcfcf;
             margin-bottom:10px;
+            cursor: pointer;
         }
         .register{
+            cursor: pointer;
             text-align: center;
             color:#dd5519;
+        }
+        .register:hover{
+            text-decoration: underline;
         }
         .checkcode{
             width: 270px;

@@ -2,31 +2,25 @@
     <div class="rank">
         <div class="rankbg" style='position:relative'>
             <img src="../../assets/pic/rankbg.png" alt="" style='postion:absolute'>
-            <div class="user-first user">
-                 <div class="circle " v-if="rank[0].get_user.img">
-                     <img :src="rank[0].get_user.img" alt="">
-                </div>
-                <div class="circle " v-if="!rank[0].get_user.img">
-                     <img src="../../assets/default.jpg" alt="">
+            <div class="user-first user" v-if="rank.length>0">
+                <div class="circle">
+                    <img :src="rank[0].get_user.img" alt="" v-if="rank[0].get_user.img">
+                     <img src="../../assets/default.jpg" alt="" v-else="rank[0].get_user.img">
                 </div>
                 <p>{{rank[0].get_user.name}}</p>
-                <p>发布数量 : {{rank[0].sum}}</p>
+                <p>接单数量 : {{rank[0].sum}}</p>
             </div>
-            <div class="user-second user">
-                <div class="circle " v-if="rank[1].get_user.img">
-                     <img :src="rank[1].get_user.img" alt="">
-                </div>
-                <div class="circle " v-if="!rank[1].get_user.img">
-                     <img src="../../assets/default.jpg" alt="">
+            <div class="user-second user" v-if="rank.length>1">
+                <div class="circle">
+                     <img :src="rank[1].get_user.img" alt="" v-if="rank[1].get_user.img">
+                     <img src="../../assets/default.jpg" alt="" v-else="rank[1].get_user.img">
                 </div>
                 <p>{{rank[1].get_user.name}}</p>
             </div>
-            <div class="user-third user">
-                <div class="circle " v-if="rank[2].get_user.img">
-                     <img :src="rank[2].get_user.img" alt="">
-                </div>
-                <div class="circle " v-if="!rank[2].get_user.img">
-                     <img src="../../assets/default.jpg" alt="">
+            <div class="user-third user" v-if="rank.length>2">
+                <div class="circle">
+                     <img :src="rank[2].get_user.img" alt="" v-if="rank[2].get_user.img">
+                     <img src="../../assets/default.jpg" alt="" v-else="rank[2].get_user.img">
                 </div>
                 <p>{{rank[2].get_user.name}}</p>
             </div>
@@ -38,12 +32,14 @@
                     <img src='../../assets/pic/ribang2.png' alt="" v-show="bangdan.ri2">
                 </div>
             </li>
+            <li class='line'></li>
             <li>
                  <div class="btn-box"  v-on:click=timetab(2)>
                     <img src='../../assets/pic/zhoubang1.png' alt="" v-show="bangdan.zhou1">
                     <img src='../../assets/pic/zhoubang2.png' alt="" v-show="bangdan.zhou2">
                 </div>
             </li>
+            <li class='line'></li>
             <li>
                  <div class="btn-box"  v-on:click=timetab(3)>
                     <img src='../../assets/pic/yuebang1.png' alt="" v-show="bangdan.yue1">
@@ -62,7 +58,7 @@
                     <td class='ranknum' v-if="index==0"><img src="../../assets/pic/rank-first.png" alt="" class='icon-rank'></td>
                     <td class='ranknum' v-if="index==1"><img src="../../assets/pic/rank-second.png" alt="" class='icon-rank'></td>
                     <td class='ranknum' v-if="index==2"><img src="../../assets/pic/rank-third.png" alt="" class='icon-rank'></td>
-                     <td class='ranknum color_666' v-if="index>2">{{index+1}}</td>
+                    <td class='ranknum color_666' v-if="index>2">{{index+1}}</td>
                     <td class='rankorder' :class="{color_666:index>2}">{{item.sum}}</td>
                     <td class='rankuser' :class="{color_666:index>2}">{{item.get_user.name}}</td>
                 </tr>
@@ -186,13 +182,13 @@
     }
   }
   .time-tab{
-      padding:60px 0 60px 0;
+      padding:60px 0 10px 0;
       width: 1200px;
       margin:auto;
       display: flex;
       justify-content: space-around;
       li{
-          width: 400px;
+          width: 360px;
           height: 90px;
           text-align: center;
           .btn-box{
@@ -200,12 +196,21 @@
               img{
                   position: absolute;
                   top:0;
-                  left:65px;
+                  left:50px;
               }
           }
       }
+      .line{
+          height: 0px;
+          border-bottom: 2px solid #999;
+          width: 50px;
+          margin:0;
+          margin-top:40px;
+      }
   }
   .ranklist {
+      font-size:16px;
+      font-weight: 500;
       table{
           border-collapse: collapse;
           margin-bottom:60px;
@@ -230,6 +235,7 @@
             }
         }
         .table-tip{
+            font-weight: 600;
             color:#dd5519;
         }
   }

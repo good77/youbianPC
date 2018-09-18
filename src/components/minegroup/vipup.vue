@@ -12,7 +12,8 @@
                         <div class="left" v-if="item.now_price!=item.old_price">
                             <p class='xianjia' :class="{active:isActive==index}">{{item.now_price}}</p>
                             <p class='yuanjia' :class="{active:isActive==index}">{{item.old_price}}</p>
-                            <p class='zhekou' :class="{active:isActive==index}">立省{{item.discount}}积分</p>
+                            <p class='zhekou' :class="{active:isActive==index}" v-if='index==0'>立省{{item.discount}}积分</p>
+                             <p class='zhekou' :class="{active:isActive==index}" v-if='index>0'>{{item.discount}}折</p>
                         </div>
                         <div class="left" v-else="item.now_price!=item.old_price">
                             <div class="paddingbox"></div>

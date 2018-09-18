@@ -285,6 +285,7 @@ export default {
             font-size: 14px;
             line-height: 16px;
             color: #db5618;
+            cursor: pointer;
             img {
               margin-left: 4px;
               vertical-align: middle;

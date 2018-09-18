@@ -47,7 +47,7 @@
                  <li>
                   <span class='xinghao'  style='display:block;float:left'>*</span><span style='display:block;float:left;margin-right:20px'>周期&nbsp</span>  
                   <div class='iptbox' style='display:flex'>
-                    <el-input  placeholder="如：(1天)" v-model="cycle1" @change="changeCycle" style="width:160px;margin-right:10px"></el-input>
+                    <el-input  placeholder="如：(1天)" v-model="cycle1" type='number' @change="changeCycle" style="width:160px;margin-right:10px"></el-input>
                     <el-select v-model="select" slot="prepend" placeholder="请选择" @change='changeCycle2' style="width:100px">
                         <el-option label="分钟" value="分钟"></el-option>
                         <el-option label="小时" value="小时"></el-option>
@@ -65,7 +65,7 @@
                <li>
                   视频
                   <div class='iptbox'>
-                    <el-input  placeholder="请输入视频连接" v-model="video_url"></el-input>
+                    <el-input  placeholder="请输入网址（url）" v-model="video_url"></el-input>
                   </div>
                 </li>  
                 <li style="overflow:hidden;height:auto">
@@ -76,6 +76,7 @@
                       :on-success='success1'
                       name='img'
                       :limit="1"
+                      @on-remove='removeFile'
                       :file-list="fileList1">
                       <el-button size="small" type="primary">点击上传</el-button>
                     </el-upload>
@@ -90,7 +91,7 @@
                 <div class='title'>
                     描述内容
                 </div>
-                <textarea v-model="describe" placeholder="请对服务的内容进行详细的描述（如有必要，请上传图片）"></textarea>
+                <textarea v-model="describe" placeholder="请对服务的内容进行详细的描述（限制100字以内）" @keyup="checkzishu"></textarea>
             </div>
              <div class="upload">
                 <div class='title'>
@@ -150,7 +151,7 @@ export default {
       img:[],
       file:'',
       fileList1:[],
-      select:'天'
+      select:'天',
     };
   },
    computed:{
@@ -162,6 +163,14 @@ export default {
     }
    },
   methods: {
+    checkzishu(){
+      if(this.describe.length>100){
+        this.describe = this.describe.substring(0,100)
+      }
+    },
+    removeFile(){
+      this.file=''
+    },
     open(){
       this.$confirm('您是否确定发布订单并扣除?'+this.sum+'积分', '提示', {
           confirmButtonText: '确定',

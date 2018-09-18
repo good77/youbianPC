@@ -12,7 +12,7 @@
                             <span @mouseover="active(index,index1)">{{item1.name}}</span>
                             <ul class='third-list' v-if="flag[index]==index1">
                                 <li v-for='(item2,index2,key) in item1.sons' :key="key" v-if="index2<16">
-                                    <router-link tag='span' :to="{path:'/tcb',query:{level_one:item.id,level_two:item1.id,level_three:item2.id}}">{{item2.name}} </router-link>
+                                    <span :title='item2.name' @click='golist(item.id,item1.id,item2.id)'>{{item2.name}}</span>
                                 </li>
                             </ul>
                         </li>
@@ -45,6 +45,9 @@ export default {
     active(index,index1){
       this.flag[index]=index1;
       console.log(this.flag[index]==index1)
+    },
+    golist(level_one,level_two,level_three){
+       window.open('./#/tcb?level_one='+level_one+'&level_two='+level_two+'&level_three='+level_three)
     }
   }
 };
@@ -81,6 +84,34 @@ export default {
 }
 .color9 {
   background-color: #6887de;
+}
+//
+.fontcolor1 {
+  color: #55a3f2;
+}
+.fontcolor2{
+  color: #47aae9;
+}
+.fontcolor3 {
+  color: #3abc8f;
+}
+.fontcolor4{
+  color: #f36668;
+}
+.fontcolor5 {
+  color: #ff8c4e;
+}
+.fontcolor6{
+  color: #ffa234;
+}
+.fontcolor7 {
+  color: #828ad9;
+}
+.fontcolor8{
+  color: #9481c8;
+}
+.fontcolor9 {
+  color: #6887de;
 }
 
 /**/
@@ -137,8 +168,10 @@ export default {
           border:1px solid #eaeaea;
         }
         .second-list {
+          margin-top:30px;
           width: 150px;
           li {
+            font-size:15px;
             width: 120px;
             height: 40px;
             line-height: 40px;
@@ -163,10 +196,12 @@ export default {
           li {
             margin-left:0;
             padding: 0;
+            padding-left:20px;
             float: left;
-            text-align: center;
+            text-align: left;
             width: 90px;
-            margin:0 15px;
+            overflow:hidden;
+            white-space:nowrap;
             color: #656565;
             line-height: 34px;
             height: 34px;

@@ -15,6 +15,9 @@
             NewsList,
             FooterCom
         },
+        created(){
+            document.title='优便-资讯中心'
+        },
     }
 </script>
 <style scoped lang='less'>
