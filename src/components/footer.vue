@@ -102,11 +102,11 @@
             </div>
             <div class="qrcode">
                 <img src="../assets/pic/kfwx.jpg" alt="" class='pic-qrcode'>
-                <p style='font-size:12px'>扫码添加优便官方微信！</p>
+                <p style='font-size:14px'>优便官方微信号</p>
             </div>
         </div> 
         <div class="footer-bottom">
-            CopyRight：2018-2019 武汉中奥互联科技有限公司 版权所有 | 皖ICP备18015008号-1
+            CopyRight：2018-2019 优便官方网站 [ youbian.link ]版权所有 | 皖ICP备18015008号-1 
         </div>
     </footer>
 </template>
@@ -253,6 +253,7 @@ footer{
             }
         }
         .logo{
+            padding-top:15px;
             .logomain{
                 vertical-align: top;
                 width: 154px;
@@ -280,9 +281,10 @@ footer{
             }
         }
         .qrcode{
+            padding-top:2px;
             line-height: 20px;
             .pic-qrcode{
-                margin-left: 15px;
+                margin-left: 2px;
                 width: 94px;
                 height: 94px;
             }

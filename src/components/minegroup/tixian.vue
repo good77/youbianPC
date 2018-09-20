@@ -71,7 +71,7 @@ import Token from '../../store/token'
                             });
                     }else{
                         this.$message({
-                                message: '提现成功，请等待审核',
+                                message: res.data.message,
                                 type: 'success'
                             });
                     }

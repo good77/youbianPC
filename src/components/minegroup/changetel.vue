@@ -51,21 +51,21 @@ import qs from 'qs'
                     code:this.checkcode
                 }
                 this.$http({
-                    method:'get',
+                    method:'post',
                     url:'http://www.youbian.link/api/v1/user/phone_edit',
-                    params:data,
+                    data:data,
                     headers:{
                         token:Token.fetch()
                     }
                 }).then(res=>{
                     if(res.code==200){
                         this.$message({
-                            message: res.message,
+                            message: res.data.message,
                             type: 'success'
                         });
                     }else{
                         this.$message({
-                            message: res.message,
+                            message: res.data.message,
                             type: 'warning'
                         });
                     }

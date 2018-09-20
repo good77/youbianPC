@@ -62,10 +62,13 @@ import Token from '../../store/token'
             })
         },
         methods:{
-              open() {
-                this.$alert('请问您是否要进行充值', '会员充值', {
+            open() {
+                this.$confirm('是否确定充值会员？', '提示', {
                 confirmButtonText: '确定',
-                callback: this.pay
+                cancelButtonText: '取消',
+                }).then(() => {
+                    this.pay()
+                }).catch(() => {
                 });
             },
             pay(){

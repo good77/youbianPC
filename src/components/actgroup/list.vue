@@ -88,6 +88,8 @@
 <style scoped lang='less'>
 .active{
     color:#dd5519 !important;
+    font-size:21px;
+    font-weight: 600;
 }
 /*分页*/
 .pagerbox{
@@ -131,6 +133,8 @@
         li:hover{
             cursor: pointer;
             color:#dd5519;
+            font-weight: 600;
+            font-size: 21px;
         }
     }
     .actlist{

@@ -290,8 +290,8 @@
                 <input type="text" class='ipt' placeholder="请输入您想要搜索的关键字" v-model='srhtext' @keyup.enter="srh">
                 <button class='btn' @click='srh'>搜索</button>
                 <ul class="wordlist">
-                    <li v-for="(item,index,key) in hotSrh" :key="key" @click='gosrh(item.title)'>
-                        {{item.title}}
+                    <li v-for="(item,index,key) in hotSrh" :key="key" @click='gosrh(item.level_one,item.level_two,item.level_three)'>
+                        {{item.name}}
                     </li>
                 </ul>
             </div>
@@ -335,9 +335,8 @@ import cityList from 'china-city-data';
             }
         },
         methods:{
-            gosrh(str){
-                this.srhtext = str;
-                this.srh();
+            gosrh(id1,id2,id3){
+                  window.open('./#/tcb?level_one='+id1+'&level_two='+id2+'&level_three='+id3)
             },
             gobottom(){
                 var flag = 0;

@@ -3,7 +3,7 @@
     <router-view/>
     <div class="lianxikefu">
         <div class="kefu">
-          <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=237370467&site=qq&menu=yes" class='qqlianxi' ><i class='iconfont icon-kefu'></i></a>
+          <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=296043247&site=qq&menu=yes" class='qqlianxi' ><i class='iconfont icon-kefu'></i></a>
         </div>
         <div class="gotop">
           <i class='iconfont icon-top' @click='gotop'></i>

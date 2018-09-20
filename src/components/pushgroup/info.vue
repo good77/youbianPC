@@ -89,13 +89,13 @@
             <div class='tip'>详情描述（必填）</div>
             <div class="content">
                 <div class='title'>
-                    描述内容
+                    <span class='xinghao'>*</span>描述内容
                 </div>
                 <textarea v-model="describe" placeholder="请对服务的内容进行详细的描述（限制100字以内）" @keyup="checkzishu"></textarea>
             </div>
              <div class="upload">
                 <div class='title'>
-                    上传图片
+                     <span class='xinghao' style='color:#fff'>*</span>上传图片
                 </div>
                 <div class="img">
                     <el-upload
@@ -374,6 +374,10 @@ export default {
     background-color: #fff;
     margin-bottom:30px;
     border-radius:10px;
+     .xinghao{
+          color:#ea910f;
+          padding-right:20px;
+        }
     .content{
         .title{
             float: left;

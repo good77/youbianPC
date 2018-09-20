@@ -17,8 +17,8 @@ import qs from 'qs'
     export default{
         data(){
             return {
-                phone:'15927908090',
-                password:'111',
+                phone:'',
+                password:'',
                 timer:''
             }
         },
@@ -108,6 +108,7 @@ import qs from 'qs'
             color:#4f4f4f;
         }
         .losepwd{
+            
             cursor: pointer;
             text-align: right;
             font-size:16px;
