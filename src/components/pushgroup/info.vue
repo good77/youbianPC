@@ -35,20 +35,20 @@
                  <li>
                   <span class='xinghao'>*</span>价格
                   <div class='iptbox'>
-                    <el-input  placeholder="请输入单价（积分）" v-model="price" @change="changePrice" type='number'></el-input>
+                    <el-input  placeholder="请输入单价（积分）" v-model="price" @keyup.native="priceOnlyNum"></el-input>
                   </div>
                 </li>
                  <li>
                   <span class='xinghao'>*</span>次数
                   <div class='iptbox'>
-                    <el-input  placeholder="请输入次数（可完成次数）" v-model="number"  @change="changeNumber" type='number'></el-input>
+                    <el-input  placeholder="请输入次数（可完成次数）" v-model="number" @keyup.native="numOnlyNum"></el-input>
                   </div>
                 </li>
                  <li>
-                  <span class='xinghao'  style='display:block;float:left'>*</span><span style='display:block;float:left;margin-right:20px'>周期&nbsp</span>  
+                  <span class='xinghao'  style='display:block;float:left'>*</span><span style='display:block;float:left;margin-right:20px'>周期&nbsp</span>
                   <div class='iptbox' style='display:flex'>
-                    <el-input  placeholder="如：(1天)" v-model="cycle1" type='number' @change="changeCycle" style="width:160px;margin-right:10px"></el-input>
-                    <el-select v-model="select" slot="prepend" placeholder="请选择" @change='changeCycle2' style="width:100px">
+                    <el-input  placeholder="如：(1天)" v-model="cycle"  @keyup.native="cycOnlyNum" style="width:160px;margin-right:10px"></el-input>
+                    <el-select v-model="select" slot="prepend" placeholder="请选择" style="width:100px">
                         <el-option label="分钟" value="分钟"></el-option>
                         <el-option label="小时" value="小时"></el-option>
                         <el-option label="天" value="天"></el-option>
@@ -56,7 +56,7 @@
                     </el-select>
                   </div>
                 </li>
-               
+
             </ul>
         </div>
         <div class="info-basic">
@@ -67,7 +67,7 @@
                   <div class='iptbox'>
                     <el-input  placeholder="请输入网址（url）" v-model="video_url"></el-input>
                   </div>
-                </li>  
+                </li>
                 <li style="overflow:hidden;height:auto">
                   <div style='float:left'>附件</div>
                   <div class='iptbox' style="float:left">
@@ -82,7 +82,7 @@
                     </el-upload>
                     <span class='jiami' :class='{isClock:isClock==1}' @click='jiami'><i class='el-icon-success'>文件加密</i></span>
                   </div>
-                </li>        
+                </li>
             </ul>
         </div>
         <div class="info-basic">
@@ -138,7 +138,6 @@ export default {
       price:'',
       number:'',
       cycle:'',
-      cycle1:'',
       describe: '',
       province_code:'',
       city_code:'',
@@ -162,6 +161,11 @@ export default {
       return this.price*this.number
     }
    },
+  watch:{
+    // number(val){
+    //   this.number = val.replace(/[^\d]/g,'')
+    // }
+  },
   methods: {
     checkzishu(){
       if(this.describe.length>100){
@@ -177,12 +181,12 @@ export default {
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-              this.send();          
+              this.send();
         }).catch(() => {
           this.$message({
             type: 'info',
             message: '发布已取消'
-          });          
+          });
         });
     },
     handleRemove(file, fileList) {
@@ -222,7 +226,7 @@ export default {
           var title = this.title;
           var price = this.price;
           var number = this.number;
-          var cycle = this.cycle;
+          var cycle = this.cycle+this.select;
           var level_one = this.level_one;
           var level_two = this.level_two;
           var level_three = this.level_three;
@@ -252,7 +256,6 @@ export default {
             encryption,
             file
           }
-          
           this.$http.post(
             'http://www.youbian.link/api/v1/release/release_info',
             data,
@@ -271,7 +274,7 @@ export default {
                     message: res.data.message,
                     type: 'warning'
                 });
-            }    
+            }
           })
     },
     handleChange(value) {
@@ -287,7 +290,6 @@ export default {
         // formData.append('file', file)
         var formData = new FormData();
         formData.append('img', file)
- 
         this.$http({
           url: 'http://www.youbian.link/api/v1/release/img',
           method: 'post',
@@ -304,7 +306,7 @@ export default {
         })
       },
     onChangeArea(a){
-      this.area_code=a.code;  
+      this.area_code=a.code;
     },
     onChangecity(a){
       this.city_code=a.code;
@@ -312,11 +314,24 @@ export default {
     onChangeprovince(a){
       this.province_code=a.code;
     },
-    changePrice(a){
-      this.price=a;
+    // changePrice(a){
+    //   this.price=a;
+    //   //console.log(a.target.value.replace(/[^\d]/g,''))
+    // },
+    // changeNumber(a){
+    // //  this.number=a;
+    // },
+    numOnlyNum(){
+      this.number = this.number.replace(/[^\.\d]/g,'')
+      this.number = this.number.replace('.','');
     },
-    changeNumber(a){
-      this.number=a;
+    priceOnlyNum(){
+      this.price = this.price.replace(/[^\.\d]/g,'')
+      this.price = this.price.replace('.','');
+    },
+    cycOnlyNum(){
+      this.cycle = this.cycle.replace(/[^\.\d]/g,'')
+      this.cycle = this.cycle.replace('.','');
     },
     changeTitle(a){
       if(a.length>20){
@@ -327,17 +342,17 @@ export default {
       }
       this.title=a;
     },
-    changeCycle(a){
-      this.cycle=a+this.select;
-      console.log(this.cycle)
-    },
-    changeCycle2(a){
-      this.cycle=this.cycle1+a;
-      console.log(this.cycle)
-    },
+    // changeCycle(a){
+    //   this.cycle=a;
+    //   console.log(this.cycle)
+    // },
+    // changeCycle2(a){
+    //   this.cycle=this.cycle1+a;
+    //   console.log(this.cycle)
+    // },
     goback(){
       this.$router.go(-1)
-    }
+    },
   },
   mounted(){
     this.$store.dispatch('getAllCate');

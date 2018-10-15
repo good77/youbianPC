@@ -65,7 +65,7 @@
                 <div class="info-main">
                     <p class='xxxx'>服务详情</p>
                     <div v-html='goodsDetail.describe' style='margin-bottom:20px;'></div>
-                    <iframe height=498 width=510 :src='goodsDetail.video_url'></iframe>
+                    <iframe v-if="goodsDetail.video_url" height=498 width=510 :src='goodsDetail.video_url'></iframe>
                     <ul style='margin-top:20px;'>
                         <li v-for="(item,key) in goodsDetail.img" :key=key>
                           <img :src="item" alt="" />
@@ -88,7 +88,7 @@
                                 </div>
                             </div>
                         </li>
-                        
+
                     </ul>
                 </div>
             </div>
@@ -201,7 +201,7 @@ export default {
               message: '您还没有登录',
               type: 'warning'
           });
-      }     
+      }
     }
   },
   mounted(){
