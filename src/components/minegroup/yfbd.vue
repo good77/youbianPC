@@ -42,6 +42,9 @@
                         状态
                     </li>
                     <li>
+                        审核状态
+                    </li>
+                    <li>
                         操作
                     </li>
                 </ul>
@@ -67,16 +70,16 @@
                             <span v-if="item.type==1" class='daiqueren'>进行中</span>
                             <span v-if="item.type==2">已完成</span>
                         </span>
+                        <span class='state'>
+                            <span v-if="item.status==0" class='color-ea910f'>未审核</span>
+                            <span v-if="item.status==1" class='daiqueren'>已审核</span>
+                            <span v-if="item.status==2" >审核不通过</span>
+                        </span>
                         <span class='op'>
-                            <span v-if="item.type==0">
-                                <router-link :to="{path:'/push/reinfo',query:{id:item.id}}" tag='span' class='xiugai'>修改</router-link>
-                                <span class='clear' @click='del(item.id)'>删除</span>
+                            <span >
+                                <router-link :to="{path:'/push/reinfo',query:{id:item.id}}" tag='span' class='xiugai' v-if="item.type==0&&(item.status==0||item.status==2)">修改</router-link>
+                                <span  class='clear' @click='del(item.id)' v-if="item.type==0&&item.status==1">删除</span>
                                 </span>
-                             <span v-if="item.type==1">
-                            </span>
-                            <span v-if="item.type==2">
-                                <span class='del'  @click='del(item.id)'>删除</span>
-                            </span>
                         </span>
                     </li>
                 </ul>
@@ -101,7 +104,7 @@ import Token from '../../store/token'
             return {
                 type:0,
                 dialogVisible: false,
-                
+
             }
         },
         computed:{
@@ -342,15 +345,17 @@ import Token from '../../store/token'
             flex-wrap: nowrap;
             justify-content: space-around;
             border-bottom:1px solid #eaeaea;
+            overflow: hidden;
             span{
                 width: 10%;
                 text-align: center;
             }
             span:nth-child(2){
-                 width: 15%;
+                 width: 12%;
             }
             span:nth-child(1){
-                 width: 25%;
+                 width: 26%;
+
             }
             span:last-child{
                  width: 15%;
